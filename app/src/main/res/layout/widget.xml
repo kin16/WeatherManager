@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:id="@+id/llToday"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@drawable/rgb"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="15dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
     <TextView
-        android:id="@+id/textv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#6600ff00"
-        android:gravity="center"
-        android:text="@string/text"
-        android:textColor="#000"
-        android:textSize="18sp">
-    </TextView>
-</RelativeLayout>
+        android:id="@+id/temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="50sp"
+        android:text="Weather... " />
+
+    <ImageView
+        android:contentDescription="@string/weather"
+        android:id="@+id/ivImage"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp" />
+</LinearLayout>

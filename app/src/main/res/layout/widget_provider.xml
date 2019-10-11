@@ -3,9 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/widget"
     android:minHeight="110dp"
-    android:minWidth="110dp"
+    android:minWidth="320dp"
     android:updatePeriodMillis="2400000"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:configure="com.example.weathermanager.ConfigActivity" >
+    android:previewImage="@drawable/rgb"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen|keyguard">
 </appwidget-provider>

@@ -1,8 +1,4 @@
 <resources>
     <string name="app_name">WeatherManager</string>
-    <string name="text">Text in widget</string>
-    <string name="red">Red</string>
-    <string name="green">Green</string>
-    <string name="blue">Blue</string>
-    <string name="ok">Ok</string>
+    <string name="weather">Weather</string>
 </resources>
