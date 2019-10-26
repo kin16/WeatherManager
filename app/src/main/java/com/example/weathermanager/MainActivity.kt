@@ -3,9 +3,6 @@ package com.example.weathermanager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import android.widget.LinearLayout
-import android.appwidget.AppWidgetManager
-import android.content.Context
 import android.util.Log
 import kotlinx.android.synthetic.main.weather.*
 import android.widget.ImageView
@@ -18,7 +15,7 @@ import android.view.View
 
 class MainActivity : AppCompatActivity() {
 
-    var TAG = "WEATHER"
+    var TAG = "MainActivity"
     lateinit var tvTemp: TextView
     lateinit var tvImage: ImageView
     private lateinit var api: WeatherAPI.ApiInterface
@@ -42,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         val callToday = api.getToday(lat, lng, units, key)
         callToday.enqueue(object : Callback<WeatherDay> {
             override fun onResponse(call: Call<WeatherDay>, response: Response<WeatherDay>) {
-                Log.e(TAG, "onResponse")
+                Log.d(TAG, "onResponse")
                 val data = response.body()
                 Log.d(TAG,response.toString())
 

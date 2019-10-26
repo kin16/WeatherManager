@@ -1,9 +1,9 @@
 package com.example.weathermanager
 
-import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import com.bumptech.glide.Glide
 import retrofit2.Call
@@ -23,7 +23,6 @@ class MyWidget : AppWidgetProvider() {
         super.onEnabled(context)
         Log.d(TAG, "onEnabled")
         api = WeatherAPI.client!!.create(WeatherAPI.ApiInterface::class.java)
-        getWeather(context!!, null, 0)
     }
 
     override fun onUpdate(
@@ -74,6 +73,9 @@ class MyWidget : AppWidgetProvider() {
                         data!!.city + " " + data.tempWithDegree
                     )
 
+                    val intent = Intent(context, NotificationService::class.java)
+                    context.startService(intent)
+
                     Glide.with(context)
                         .asBitmap()
                         .load(data.iconUrl)
@@ -89,12 +91,9 @@ class MyWidget : AppWidgetProvider() {
                                 remoteViews.setImageViewBitmap(R.id.ivImage, bitmap)
                                 appWidgetManager!!.updateAppWidget(widgetID, remoteViews)
                             }
-
-
                         })
                 }
             }
-
 
             override fun onFailure(call: Call<WeatherDay>, t: Throwable) {
                 Log.e(TAG, "onFailure")

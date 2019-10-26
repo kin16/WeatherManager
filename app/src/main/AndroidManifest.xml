@@ -30,6 +30,9 @@
                 android:name="android.appwidget.provider"
                 android:resource="@layout/widget_provider"/>
         </receiver>
+        <service android:name=".NotificationService">
+
+        </service>
 
     </application>
 

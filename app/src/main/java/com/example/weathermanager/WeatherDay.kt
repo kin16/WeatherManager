@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 
-class WeatherDay(
+data class WeatherDay(
     @field:SerializedName("main")
     private val temp: WeatherTemp, @field:SerializedName("weather")
     private val desctiption: List<WeatherDescription>
