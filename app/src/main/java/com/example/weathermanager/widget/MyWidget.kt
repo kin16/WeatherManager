@@ -1,4 +1,4 @@
-package com.example.weathermanager
+package com.example.weathermanager.widget
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -14,6 +14,10 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.RemoteViews
 import com.bumptech.glide.request.target.CustomTarget
+import com.example.weathermanager.model.NotificationService
+import com.example.weathermanager.R
+import com.example.weathermanager.model.WeatherAPI
+import com.example.weathermanager.model.WeatherDay
 
 class MyWidget : AppWidgetProvider() {
     val TAG = "MyWidget"
@@ -67,7 +71,9 @@ class MyWidget : AppWidgetProvider() {
                 var bitmap:Bitmap
 
                 if (response.isSuccessful()) {
-                    val remoteViews = RemoteViews(context.packageName, R.layout.widget)
+                    val remoteViews = RemoteViews(context.packageName,
+                        R.layout.widget
+                    )
                     remoteViews.setTextViewText(
                         R.id.temp,
                         data!!.city + " " + data.tempWithDegree
@@ -100,5 +106,6 @@ class MyWidget : AppWidgetProvider() {
                 Log.e(TAG, t.toString())
             }
         })
+        Log.d(TAG,"Work!")
     }
 }

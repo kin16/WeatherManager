@@ -1,4 +1,4 @@
-package com.example.weathermanager
+package com.example.weathermanager.model
 
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -19,7 +19,7 @@ object WeatherAPI {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             }
-            return this.retrofit
+            return retrofit
         }
 
 

@@ -1,4 +1,4 @@
-package com.example.weathermanager
+package com.example.weathermanager.model
 
 import com.google.gson.annotations.SerializedName
 import java.util.*
@@ -31,6 +31,9 @@ data class WeatherDay(
 
     val tempInteger: String
         get() = temp.temp!!.toInt().toString()
+
+    val tempInt: Int
+        get() = temp.temp!!.toInt()
 
     val tempWithDegree: String
         get() = temp.temp!!.toInt().toString() + "\u00B0"

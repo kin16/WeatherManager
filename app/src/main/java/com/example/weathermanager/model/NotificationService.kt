@@ -1,4 +1,4 @@
-package com.example.weathermanager
+package com.example.weathermanager.model
 
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -10,6 +10,8 @@ import androidx.core.app.NotificationCompat
 import android.app.NotificationChannel
 import android.graphics.Color
 import android.os.Build
+import com.example.weathermanager.R
+import com.example.weathermanager.view.MainActivity
 
 class NotificationService : Service() {
     override fun onBind(intent: Intent?): IBinder? {
