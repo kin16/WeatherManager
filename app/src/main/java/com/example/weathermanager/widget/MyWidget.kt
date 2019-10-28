@@ -18,6 +18,7 @@ import com.example.weathermanager.model.NotificationService
 import com.example.weathermanager.R
 import com.example.weathermanager.model.WeatherAPI
 import com.example.weathermanager.model.WeatherDay
+import com.example.weathermanager.presenter.Presenter
 
 class MyWidget : AppWidgetProvider() {
     val TAG = "MyWidget"
@@ -79,8 +80,7 @@ class MyWidget : AppWidgetProvider() {
                         data!!.city + " " + data.tempWithDegree
                     )
 
-                    val intent = Intent(context, NotificationService::class.java)
-                    context.startService(intent)
+                    Presenter.notification(data.tempInt, context)
 
                     Glide.with(context)
                         .asBitmap()

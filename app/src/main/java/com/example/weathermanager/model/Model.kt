@@ -1,7 +1,6 @@
 package com.example.weathermanager.model
 
 import android.util.Log
-import com.bumptech.glide.Glide
 import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.Callback
