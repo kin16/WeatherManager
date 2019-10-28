@@ -35,6 +35,18 @@ class Presenter(model:Model, activity: MainActivity){
             )
     }
 
+    fun forecast() {
+        val subscriber = model.getForecast()
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+
+            },{
+                Log.e("s", "Error")
+            }
+            )
+    }
+
     fun setViews(data: WeatherDay) {
         activity.tvTemp.text = data.city + " " + data.tempInt
         Glide.with(activity)
@@ -83,7 +95,5 @@ class Presenter(model:Model, activity: MainActivity){
 
             notificationManager.notify(1, notification)
         }
-
-
     }
 }

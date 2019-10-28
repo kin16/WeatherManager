@@ -1,5 +1,6 @@
 package com.example.weathermanager.view
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
@@ -11,7 +12,7 @@ import com.example.weathermanager.model.Model
 import com.example.weathermanager.presenter.Presenter
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
     var TAG = "MainActivity"
     lateinit var tvTemp: TextView
     lateinit var tvImage: ImageView

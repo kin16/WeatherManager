@@ -5,6 +5,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import com.google.gson.annotations.SerializedName
+
+
 
 object WeatherAPI {
     var KEY = "7054efcfe4c9368e89f2e16b9ac6565a"
@@ -31,5 +34,13 @@ object WeatherAPI {
             @Query("units") units: String,
             @Query("appid") appid: String
         ): Call<WeatherDay>
+
+        @GET("forecast")
+        fun getForecast(
+            @Query("lat") lat: Double?,
+            @Query("lon") lon: Double?,
+            @Query("units") units: String,
+            @Query("appid") appid: String
+        ): Call<WeatherForecast>
     }
 }
