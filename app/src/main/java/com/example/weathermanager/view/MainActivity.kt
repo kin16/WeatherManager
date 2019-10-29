@@ -21,7 +21,7 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.weather)
+        setContentView(R.layout.activity_main)
 
         presenter = Presenter(Model(), this)
 

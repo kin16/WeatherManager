@@ -51,6 +51,7 @@ data class WeatherDay(
     }
 
     inner class WeatherDescription {
+        internal var main: String? = null
         internal var icon: String? = null
     }
 
