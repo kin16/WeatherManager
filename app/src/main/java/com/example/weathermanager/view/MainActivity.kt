@@ -1,35 +1,99 @@
 package com.example.weathermanager.view
 
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import kotlinx.android.synthetic.main.weather.*
 import android.widget.ImageView
 import android.view.View
-import com.example.weathermanager.R
-import com.example.weathermanager.model.Model
-import com.example.weathermanager.presenter.Presenter
+import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 
+import androidx.recyclerview.widget.RecyclerView
+import com.example.weathermanager.model.Model
+import com.example.weathermanager.model.WeatherDay
+import com.example.weathermanager.presenter.Presenter
+import kotlinx.android.synthetic.main.rec.*
+import androidx.cardview.widget.CardView
+import android.view.LayoutInflater
+import com.example.weathermanager.R
 
 class MainActivity : Activity() {
-    var TAG = "MainActivity"
-    lateinit var tvTemp: TextView
-    lateinit var tvImage: ImageView
+    private var TAG = "MainActivity"
+    lateinit var rec: RecyclerView
     lateinit var presenter: Presenter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.rec)
 
         presenter = Presenter(Model(), this)
 
-        tvTemp = temp
-        tvImage = ivImage
+        rec = rv as RecyclerView
+        val manager = LinearLayoutManager(this)
+        rec.layoutManager = manager
+        rec.setHasFixedSize(true)
+        presenter.forecast()
     }
 
-    fun weather(v : View) {
-        presenter.weather()
+    class cardAdapter(persons: List<WeatherDay>) : RecyclerView.Adapter<cardAdapter.cardHolder>() {
+
+        private var persons: List<WeatherDay>
+
+        init {
+            this.persons = persons
+        }
+
+        override fun getItemCount(): Int {
+            return persons.size
+        }
+
+        override fun onBindViewHolder(holder: cardHolder, position: Int) {
+            holder.ct.text = persons.get(position).tempWithDegree
+            holder.cd.text = persons.get(position).description
+            setImage(persons.get(position), holder.ci)
+        }
+
+        fun setImage(data: WeatherDay, view: ImageView){
+            when(data.icon){
+                "01d" -> view.setImageResource(R.drawable.sun)
+                "01n" -> view.setImageResource(R.drawable.moon)
+                "02d" -> view.setImageResource(R.drawable.cloudy_sun)
+                "02n" -> view.setImageResource(R.drawable.cloudy_moon)
+                "03d" -> view.setImageResource(R.drawable.clouds)
+                "03n" -> view.setImageResource(R.drawable.clouds)
+                "04d" -> view.setImageResource(R.drawable.hard_clouds)
+                "04n" -> view.setImageResource(R.drawable.hard_clouds)
+                "09d" -> view.setImageResource(R.drawable.shower_rain)
+                "09n" -> view.setImageResource(R.drawable.shower_rain)
+                "10d" -> view.setImageResource(R.drawable.rain)
+                "10n" -> view.setImageResource(R.drawable.rain)
+                "11d" -> view.setImageResource(R.drawable.storm)
+                "11n" -> view.setImageResource(R.drawable.storm)
+                "12d" -> view.setImageResource(R.drawable.winter)
+                "12n" -> view.setImageResource(R.drawable.winter)
+                "13d" -> view.setImageResource(R.drawable.mist)
+                "13n" -> view.setImageResource(R.drawable.mist)
+            }
+
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): cardHolder {
+            val v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card, parent, false)
+            return cardHolder(v)
+        }
+        class cardHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            var cv: CardView
+            var ct: TextView
+            var cd: TextView
+            var ci: ImageView
+
+            init {
+                cv = itemView.findViewById(R.id.card) as CardView
+                ct = itemView.findViewById(R.id.cardtemp) as TextView
+                cd = itemView.findViewById(R.id.cardDescription) as TextView
+                ci = itemView.findViewById(R.id.cardImage) as ImageView
+            }
+        }
     }
 }
+

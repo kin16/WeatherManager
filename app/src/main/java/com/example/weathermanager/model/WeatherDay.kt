@@ -41,6 +41,9 @@ data class WeatherDay(
     val icon: String?
         get() = desctiption[0].icon
 
+    val description: String?
+        get() = desctiption[0].description
+
     val iconUrl: String
         get() = "http://openweathermap.org/img/w/" + desctiption[0].icon + ".png"
 
@@ -51,7 +54,9 @@ data class WeatherDay(
     }
 
     inner class WeatherDescription {
-        internal var main: String? = null
+        @SerializedName("description")
+        internal var description: String? = null
+        @SerializedName("icon")
         internal var icon: String? = null
     }
 
