@@ -15,7 +15,11 @@ import com.example.weathermanager.presenter.Presenter
 import kotlinx.android.synthetic.main.rec.*
 import androidx.cardview.widget.CardView
 import android.view.LayoutInflater
+import android.graphics.Color
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.weathermanager.R
+import java.util.*
+
 
 class MainActivity : Activity() {
     private var TAG = "MainActivity"
@@ -29,13 +33,13 @@ class MainActivity : Activity() {
         presenter = Presenter(Model(), this)
 
         rec = rv as RecyclerView
-        val manager = LinearLayoutManager(this)
+        val manager = GridLayoutManager(this, 2)
         rec.layoutManager = manager
         rec.setHasFixedSize(true)
         presenter.forecast()
     }
 
-    class cardAdapter(persons: List<WeatherDay>) : RecyclerView.Adapter<cardAdapter.cardHolder>() {
+    class CardAdapter(persons: List<WeatherDay>) : RecyclerView.Adapter<CardAdapter.CardHolder>() {
 
         private var persons: List<WeatherDay>
 
@@ -47,10 +51,14 @@ class MainActivity : Activity() {
             return persons.size
         }
 
-        override fun onBindViewHolder(holder: cardHolder, position: Int) {
+        override fun onBindViewHolder(holder: CardHolder, position: Int) {
             holder.ct.text = persons.get(position).tempWithDegree
-            holder.cd.text = persons.get(position).description
-            setImage(persons.get(position), holder.ci)
+            holder.co.text = persons.get(position).description
+            //setImage(persons.get(position), holder.ci)
+            holder.cd.text = persons.get(position).date.time.toString()
+            val rnd = Random()
+            var currentColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+            holder.cv.setCardBackgroundColor(currentColor)
         }
 
         fun setImage(data: WeatherDay, view: ImageView){
@@ -77,21 +85,22 @@ class MainActivity : Activity() {
 
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): cardHolder {
-            val v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card, parent, false)
-            return cardHolder(v)
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {
+            val v = LayoutInflater.from(parent.getContext()).inflate(R.layout.weather, parent, false)
+            return CardHolder(v)
         }
-        class cardHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        class CardHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             var cv: CardView
             var ct: TextView
+            var co: TextView
             var cd: TextView
-            var ci: ImageView
 
             init {
                 cv = itemView.findViewById(R.id.card) as CardView
                 ct = itemView.findViewById(R.id.cardtemp) as TextView
-                cd = itemView.findViewById(R.id.cardDescription) as TextView
-                ci = itemView.findViewById(R.id.cardImage) as ImageView
+                co = itemView.findViewById(R.id.carddescription) as TextView
+                cd = itemView.findViewById(R.id.carddate) as TextView
+
             }
         }
     }

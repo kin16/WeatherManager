@@ -44,7 +44,7 @@ class Presenter(model:Model, activity: MainActivity){
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.e(TAG, "get forecast")
-                val adapter = MainActivity.cardAdapter(it.items)
+                val adapter = MainActivity.CardAdapter(it.items)
                 activity.rec.adapter = adapter
             },{
                 Log.e("s", "Error")

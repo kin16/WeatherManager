@@ -40,7 +40,7 @@ class Model{
     fun getForecast(): Single<WeatherForecast>{
         return Single.create{
             subscriber ->
-            val callForecast = api.getForecast(lat, lng, units, key);
+            val callForecast = api.getForecast(lat, lng, units, key)
             callForecast.enqueue(object : Callback<WeatherForecast> {
                 override fun onResponse(call: Call<WeatherForecast>, response: Response<WeatherForecast>) {
                     Log.d(TAG, "onResponse")
