@@ -2,38 +2,42 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.weathermanager">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".view.MainActivity">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".view.MainActivit"
+            android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".widget.MyWidget"
+        <activity android:name=".view.MainActivity">
+
+        </activity>
+
+        <receiver
+            android:name=".widget.MyWidget"
             android:label="@string/app_name">
             <intent-filter>
-                <action
-                    android:name="android.appwidget.action.APPWIDGET_UPDATE">
-                </action>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"></action>
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@layout/widget_provider"/>
+                android:resource="@layout/widget_provider" />
         </receiver>
-        <service android:name=".model.NotificationService">
 
-        </service>
-
+        <service android:name=".model.NotificationService"></service>
     </application>
 
 </manifest>
