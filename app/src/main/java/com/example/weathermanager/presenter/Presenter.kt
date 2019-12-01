@@ -5,29 +5,24 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import com.example.weathermanager.model.Model
-import com.example.weathermanager.view.MainActivity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.util.Log
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
-import com.bumptech.glide.Glide
 import com.example.weathermanager.R
-import com.example.weathermanager.model.WeatherDay
-import com.example.weathermanager.model.WeatherForecast
+import com.example.weathermanager.fragments.DashboardFragment
+import com.example.weathermanager.view.MainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-
-class Presenter(model:Model, activity: MainActivity){
+class Presenter(model:Model, activity: DashboardFragment){
     private var TAG = "Presenter"
     private val activity = activity
     private val model = model
 
     fun weather() {
-        val subscriber = model.getWeather()
+        model.getWeather()
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -39,12 +34,12 @@ class Presenter(model:Model, activity: MainActivity){
     }
 
     fun forecast() {
-        val subscriber = model.getForecast()
+        model.getForecast()
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.e(TAG, "get forecast")
-                val adapter = MainActivity.CardAdapter(it.items)
+                val adapter = DashboardFragment.CardAdapter(it.items)
                 activity.rec.adapter = adapter
             },{
                 Log.e("s", "Error")
@@ -79,7 +74,7 @@ class Presenter(model:Model, activity: MainActivity){
             val pendingIntent = PendingIntent.getActivity(context, 0, ii, 0)
 
 
-            val builder = NotificationCompat.Builder(context)
+            val builder = NotificationCompat.Builder(context, "dfd")
                 .setSmallIcon(R.drawable.icon)
                 .setContentTitle("Title")
                 .setContentText("Notification text")
