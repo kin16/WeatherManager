@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.fragment.app.Fragment
 import com.example.weathermanager.R
 import com.example.weathermanager.fragments.DashboardFragment
 import com.example.weathermanager.view.MainActivity
@@ -21,17 +22,7 @@ class Presenter(model:Model, activity: DashboardFragment){
     private val activity = activity
     private val model = model
 
-    fun weather() {
-        model.getWeather()
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                Log.d(TAG, "get weather")
-            },{
-                Log.e("s", "Error")
-            }
-            )
-    }
+
 
     fun forecast() {
         model.getForecast()

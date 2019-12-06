@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import com.example.weathermanager.R
-
-/**
- * Created by Belal on 1/23/2018.
- */
+import com.example.weathermanager.model.Model
+import com.example.weathermanager.presenter.HomePresenter
+import com.example.weathermanager.presenter.Presenter
 
 class HomeFragment : Fragment() {
+    private var TAG = "HomeFragment"
+    private lateinit var presenter: HomePresenter
+
     @Nullable
     @Override
     override fun onCreateView(
@@ -21,6 +23,9 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, null)
+        presenter = HomePresenter(Model())
+        var v = inflater.inflate(R.layout.fragment_home, null)
+        presenter.weather(v)
+        return v
     }
 }

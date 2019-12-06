@@ -7,8 +7,9 @@ import java.util.*
 data class WeatherDay(
     @field:SerializedName("main")
     private val temp: WeatherTemp, @field:SerializedName("weather")
-    private val desctiption: List<WeatherDescription>
-) {
+    private val desctiption: List<WeatherDescription>,
+    @field:SerializedName("wind") private val windSpeed: WindSpeed,
+    @field:SerializedName("clouds") private val clouds:Clouds) {
 
     @SerializedName("name")
     val city: String? = null
@@ -44,13 +45,39 @@ data class WeatherDay(
     val description: String?
         get() = desctiption[0].description
 
+    val pressure: String?
+        get() = temp.pressure.toString()
+
+    val humidity: String?
+        get() = temp.humidity.toString()
+
+    val speed: String?
+        get() = windSpeed.speed.toString()
+
+    val deg: String?
+        get() = windSpeed.deg.toString()
+
+    val all:String?
+        get() = clouds.all.toString()
+
     val iconUrl: String
         get() = "http://openweathermap.org/img/w/" + desctiption[0].icon + ".png"
 
     inner class WeatherTemp {
         internal var temp: Double? = null
+        internal var pressure: Double? = null
+        internal var humidity: Double? = null
         internal var temp_min: Double? = null
         internal var temp_max: Double? = null
+    }
+
+    inner class Clouds{
+        internal var all:Double? = null
+    }
+
+    inner class WindSpeed{
+        internal var speed: Double? = null
+        internal var deg: Double? = null
     }
 
     inner class WeatherDescription {
