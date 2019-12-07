@@ -5,4 +5,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="pressure">Атмосферное давление   -   </string>
+    <string name="windspeed">Скорость ветра   -   </string>
+    <string name="winddeg">Направление ветра   -   </string>
+    <string name="clouding">Облачность   -   </string>
 </resources>
