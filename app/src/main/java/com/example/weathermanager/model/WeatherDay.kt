@@ -9,7 +9,10 @@ data class WeatherDay(
     private val temp: WeatherTemp, @field:SerializedName("weather")
     private val desctiption: List<WeatherDescription>,
     @field:SerializedName("wind") private val windSpeed: WindSpeed,
-    @field:SerializedName("clouds") private val clouds:Clouds) {
+    @field:SerializedName("clouds") private val clouds:Clouds
+    //@field:SerializedName("wind") private val rain: Rain,
+    //@field:SerializedName("wind") private val snow: Snow
+     ) {
 
     @SerializedName("name")
     val city: String? = null
@@ -59,6 +62,10 @@ data class WeatherDay(
 
     val all:String?
         get() = clouds.all.toString()
+    //val hrain:String?
+    //    get() = rain.h.toString()
+    //val hsnow:String?
+    //    get() = snow.h.toString()
 
     val iconUrl: String
         get() = "http://openweathermap.org/img/w/" + desctiption[0].icon + ".png"
@@ -78,6 +85,13 @@ data class WeatherDay(
     inner class WindSpeed{
         internal var speed: Double? = null
         internal var deg: Double? = null
+    }
+
+    inner class Rain{
+        internal var h:Double? = null
+    }
+    inner class Snow{
+        internal var h:Double? = null
     }
 
     inner class WeatherDescription {

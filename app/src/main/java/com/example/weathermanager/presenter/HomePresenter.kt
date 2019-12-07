@@ -28,11 +28,14 @@ class HomePresenter (model: Model){
     private fun setViews(weatherDay: WeatherDay, v:View): View{
         v.cardtemp.text = weatherDay.tempWithDegree
         v.carddescription.text = weatherDay.description
-        v.pressure.text = weatherDay.pressure
-        v.humidity.text = weatherDay.humidity
-        v.windspeed.text = weatherDay.speed
-        v.winddeg.text = weatherDay.deg
-        v.clouding.text = weatherDay.all
+        v.pressure.text = "Атмосферное давление   -   " + weatherDay.pressure
+        v.humidity.text = "Влажность  -  " + weatherDay.humidity
+        v.windspeed.text = "Скорость ветра  -  " + weatherDay.speed
+        v.winddeg.text = "Направление ветра  -  " + weatherDay.deg
+        v.clouding.text = "Облачность, %  -  " + weatherDay.all
+        //v.snow.text = "Обьем снега, мм" + weatherDay.hsnow
+        //v.rain.text = "Обьем дождя, мм" + weatherDay.hrain
+        //v.textView.text = weatherDay.date.toString()
         return v
     }
 }

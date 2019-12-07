@@ -50,7 +50,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="22dp"
                 android:layout_marginBottom="0dp"
-                android:text="TextView"
                 android:textSize="18dp" />
 
         </LinearLayout>
@@ -71,7 +70,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="22dp"
         android:layout_marginBottom="0dp"
-        android:text="Атмосферное давление   -   "
         android:textSize="18dp" />
     <TextView
         android:layout_marginTop="5dp"
@@ -82,7 +80,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="22dp"
         android:layout_marginBottom="0dp"
-        android:text="Влажность   -   "
         android:textSize="18dp" />
     <TextView
         android:layout_marginTop="5dp"
@@ -93,7 +90,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="22dp"
         android:layout_marginBottom="0dp"
-        android:text="Скорость ветра   -   "
         android:textSize="18dp" />
     <TextView
         android:layout_marginTop="5dp"
@@ -104,7 +100,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="22dp"
         android:layout_marginBottom="0dp"
-        android:text="Направление ветра   -   "
         android:textSize="18dp" />
     <TextView
         android:layout_marginTop="5dp"
@@ -115,7 +110,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="22dp"
         android:layout_marginBottom="0dp"
-        android:text="Облачность   -   "
         android:textSize="18dp" />
 
     <TextView
@@ -127,7 +121,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="22dp"
         android:layout_marginBottom="0dp"
-        android:text="Обьем снега, мм   -   "
+        android:text="Снега нет"
         android:textSize="18dp" />
     <TextView
         android:layout_marginTop="5dp"
@@ -138,6 +132,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="22dp"
         android:layout_marginBottom="0dp"
-        android:text="Обьем дождя, мм   -   "
+        android:text="Дождя нет"
         android:textSize="18dp" />
 </LinearLayout>
