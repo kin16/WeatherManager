@@ -10,7 +10,6 @@ import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.fragment.app.Fragment
 import com.example.weathermanager.R
 import com.example.weathermanager.fragments.DashboardFragment
 import com.example.weathermanager.view.MainActivity

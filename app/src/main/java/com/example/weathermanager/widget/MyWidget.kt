@@ -3,7 +3,6 @@ package com.example.weathermanager.widget
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import com.bumptech.glide.Glide
 import retrofit2.Call
@@ -14,7 +13,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.RemoteViews
 import com.bumptech.glide.request.target.CustomTarget
-import com.example.weathermanager.model.NotificationService
 import com.example.weathermanager.R
 import com.example.weathermanager.model.WeatherAPI
 import com.example.weathermanager.model.WeatherDay

@@ -1,6 +1,8 @@
 package com.example.weathermanager.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 
 import androidx.appcompat.app.AppCompatActivity
@@ -43,5 +45,26 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.navigation_dashboard -> fragment = DashboardFragment()
         }
         return loadFragment(fragment)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.about -> {
+                val intent = Intent(this, AboutActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            R.id.settings -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 }

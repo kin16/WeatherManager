@@ -1,7 +1,7 @@
 package com.example.weathermanager.fragments
 
 import android.graphics.Color
-import   android . os . Bundle ;
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +26,7 @@ import java.util.*
 class DashboardFragment : Fragment() {
     private var TAG = "MainActivity"
     lateinit var rec: RecyclerView
-    lateinit var presenter: Presenter
+    private lateinit var presenter: Presenter
 
 
     @Nullable
@@ -67,32 +67,8 @@ class DashboardFragment : Fragment() {
             //setImage(persons.get(position), holder.ci)
             holder.cd.text = persons.get(position).date.time.toString()
             val rnd = Random()
-            var currentColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+            val currentColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
             holder.cv.setCardBackgroundColor(currentColor)
-        }
-
-        fun setImage(data: WeatherDay, view: ImageView) {
-            when (data.icon) {
-                "01d" -> view.setImageResource(R.drawable.sun)
-                "01n" -> view.setImageResource(R.drawable.moon)
-                "02d" -> view.setImageResource(R.drawable.cloudy_sun)
-                "02n" -> view.setImageResource(R.drawable.cloudy_moon)
-                "03d" -> view.setImageResource(R.drawable.clouds)
-                "03n" -> view.setImageResource(R.drawable.clouds)
-                "04d" -> view.setImageResource(R.drawable.hard_clouds)
-                "04n" -> view.setImageResource(R.drawable.hard_clouds)
-                "09d" -> view.setImageResource(R.drawable.shower_rain)
-                "09n" -> view.setImageResource(R.drawable.shower_rain)
-                "10d" -> view.setImageResource(R.drawable.rain)
-                "10n" -> view.setImageResource(R.drawable.rain)
-                "11d" -> view.setImageResource(R.drawable.storm)
-                "11n" -> view.setImageResource(R.drawable.storm)
-                "12d" -> view.setImageResource(R.drawable.winter)
-                "12n" -> view.setImageResource(R.drawable.winter)
-                "13d" -> view.setImageResource(R.drawable.mist)
-                "13n" -> view.setImageResource(R.drawable.mist)
-            }
-
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {
