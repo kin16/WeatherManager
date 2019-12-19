@@ -28,13 +28,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun loadFragment(fragment:Fragment) : Boolean{
-        if (fragment != null) {
-            supportFragmentManager.beginTransaction()
-                .replace(fragment_container.id, fragment)
-                .commit()
-            return true
-        }
-        return false
+        supportFragmentManager.beginTransaction()
+            .replace(fragment_container.id, fragment)
+            .commit()
+        return true
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
