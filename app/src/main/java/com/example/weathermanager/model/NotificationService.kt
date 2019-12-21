@@ -22,6 +22,7 @@ class NotificationService : Service() {
         startNotification()
         super.onCreate()
     }
+
     private fun startNotification(){
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

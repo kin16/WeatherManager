@@ -12,6 +12,7 @@ import java.util.*
 
 
 class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener{
+    var cal:Calendar = Calendar.getInstance()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -27,6 +28,10 @@ class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener{
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        Toast.makeText(activity, "HOUR $hourOfDay, MINUTE $minute", Toast.LENGTH_LONG).show()
+        cal.setTimeInMillis(System.currentTimeMillis())
+        cal.set(Calendar.HOUR_OF_DAY, hourOfDay)
+        cal.set(Calendar.MINUTE, minute)
+
+        Toast.makeText(activity, "Time set: HOUR $hourOfDay, MINUTE $minute", Toast.LENGTH_LONG).show()
     }
 }
