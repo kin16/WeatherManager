@@ -59,5 +59,6 @@ class NotificationService : Service() {
         val notification = builder.build()
 
         notificationManager.notify(1, notification)
+        startForeground(1, notification)
     }
 }

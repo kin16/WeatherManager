@@ -4,15 +4,16 @@ import android.app.Dialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.text.format.DateFormat
-
-import android.widget.TimePicker
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import java.util.*
 
 
-class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener{
-    var cal:Calendar = Calendar.getInstance()
+class TimePickerFragment : DialogFragment(){
+    private var mListener: TimePickerDialog.OnTimeSetListener? = null
+
+    fun setListener(mListener: TimePickerDialog.OnTimeSetListener) {
+        this.mListener = mListener
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -22,16 +23,8 @@ class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener{
 
         // Create a new instance of TimePickerDialog and return it
         return TimePickerDialog(
-            activity, this, hour, minute,
+            activity, mListener, hour, minute,
             DateFormat.is24HourFormat(activity)
         )
-    }
-
-    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        cal.setTimeInMillis(System.currentTimeMillis())
-        cal.set(Calendar.HOUR_OF_DAY, hourOfDay)
-        cal.set(Calendar.MINUTE, minute)
-
-        Toast.makeText(activity, "Time set: HOUR $hourOfDay, MINUTE $minute", Toast.LENGTH_LONG).show()
     }
 }
