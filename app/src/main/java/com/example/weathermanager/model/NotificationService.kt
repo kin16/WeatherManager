@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat
 import android.app.NotificationChannel
 import android.graphics.Color
 import android.os.Build
+import android.util.Log
 import com.example.weathermanager.R
 import com.example.weathermanager.view.MainActivity
 
@@ -20,6 +21,8 @@ class NotificationService : Service() {
 
     override fun onCreate() {
         startNotification()
+        Log.d("TimeReceiver", "Notification must work!!!")
+        stopForeground(false)
         super.onCreate()
     }
 

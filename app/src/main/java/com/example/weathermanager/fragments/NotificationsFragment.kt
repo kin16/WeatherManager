@@ -15,6 +15,8 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.util.Log
+import android.widget.CheckBox
 import android.widget.TimePicker
 
 import com.example.weathermanager.TimeReceiver
@@ -24,6 +26,10 @@ import java.util.*
 
 class NotificationsFragment : Fragment(),View.OnClickListener, TimePickerDialog.OnTimeSetListener  {
     private var mButton:Button? = null
+    private var mCancel:Button? = null
+    private var alarmManager:AlarmManager? = null
+    private var box:CheckBox? = null
+
     var DIALOG_TIME = "Time"
 
     @Nullable
@@ -36,21 +42,37 @@ class NotificationsFragment : Fragment(),View.OnClickListener, TimePickerDialog.
         val v = inflater.inflate(R.layout.fragment_notifications, null)
         mButton = v.findViewById(R.id.button)
         mButton!!.setOnClickListener(this)
+        mCancel = v.findViewById(R.id.button2)
+        mCancel!!.setOnClickListener(this)
+
+        box = v.findViewById(R.id.box)
         return v
     }
 
     override fun onClick(v: View?) {
-        val fragment = TimePickerFragment()
-        fragment.setListener(this)
-        fragment.show(fragmentManager!!, DIALOG_TIME)
+        when (v!!.id){
+            R.id.button -> {
+                val fragment = TimePickerFragment()
+                fragment.setListener(this)
+                fragment.show(fragmentManager!!, DIALOG_TIME)
+            }
+            R.id.button2 -> {
+                val alarmIntent = Intent(activity, TimeReceiver::class.java)
+                val pendingIntent = PendingIntent.getBroadcast(activity, 0, alarmIntent, 0)
+
+                alarmManager = activity!!.getSystemService(ALARM_SERVICE) as AlarmManager?
+
+                Log.d("TimeReceiver", "Canceled")
+                alarmManager!!.cancel(pendingIntent)
+            }
+        }
+
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         val alarmIntent = Intent(activity, TimeReceiver::class.java)
 
         val pendingIntent = PendingIntent.getBroadcast(activity, 0, alarmIntent, 0)
-
-        val alarmManager = activity!!.getSystemService(ALARM_SERVICE) as AlarmManager?
 
         val cal = Calendar.getInstance()
 
@@ -63,7 +85,16 @@ class NotificationsFragment : Fragment(),View.OnClickListener, TimePickerDialog.
 
         Toast.makeText(activity, "Time set: HOUR $hourOfDay, MINUTE $minute", Toast.LENGTH_LONG).show()
 
-        alarmManager!!.setRepeating(AlarmManager.RTC_WAKEUP,
-            cal.timeInMillis, 1000 * 60 * 60 * 24, pendingIntent)
+        alarmManager = activity!!.getSystemService(ALARM_SERVICE) as AlarmManager?
+
+        if (box!!.isChecked) {
+            alarmManager!!.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                cal.timeInMillis, 1000 * 60 * 60 * 24, pendingIntent)
+            Log.d("TimeReceiver", "IsChecked true")
+        }else{
+            alarmManager!!.set(AlarmManager.RTC_WAKEUP, cal.timeInMillis, pendingIntent)
+            Log.d("TimeReceiver", "IsChecked false")
+        }
     }
 }

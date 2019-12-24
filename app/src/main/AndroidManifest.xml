@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.SET_ALARM"/>
 
     <application
         android:allowBackup="true"
@@ -36,7 +37,12 @@
         </receiver>
 
         <receiver android:name=".TimeReceiver"
-            android:process=":remote"></receiver>
+            android:process=":remote"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
         <activity android:name=".view.AboutActivity"/>
         <activity android:name=".view.SettingsActivity"/>
         <service android:name=".model.NotificationService"/>
