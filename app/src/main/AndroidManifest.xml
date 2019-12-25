@@ -44,7 +44,7 @@
             </intent-filter>
         </receiver>
         <activity android:name=".view.AboutActivity"/>
-        <activity android:name=".view.SettingsActivity"/>
+        <activity android:name=".view.SettingsActivity" />
         <service android:name=".model.NotificationService"/>
     </application>
 

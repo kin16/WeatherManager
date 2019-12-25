@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Notifications">
+        <ListPreference
+            android:title="Update Period"
+            android:summary="This is period of update notifications"
+            android:key="list"
+            android:defaultValue="12"
+            android:entries="@array/listKHours"
+            android:entryValues="@array/listHours" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Design">
+        <ListPreference
+            android:title="Color Theme"
+            android:summary="This theme of color in application"
+            android:key="theme"
+            android:defaultValue="green"
+            android:entries="@array/listThemes"
+            android:entryValues="@array/listThemes"/>
+        <CheckBoxPreference android:title="Dark Mode"
+            android:summary="This is on dark theme in application"
+            android:defaultValue="false"
+            android:key="prefCheck"/>
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>
