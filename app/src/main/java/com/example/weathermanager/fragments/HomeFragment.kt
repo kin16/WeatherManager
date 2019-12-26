@@ -12,7 +12,6 @@ import com.example.weathermanager.model.Model
 import com.example.weathermanager.presenter.HomePresenter
 
 class HomeFragment : Fragment() {
-    private var TAG = "HomeFragment"
     private lateinit var presenter: HomePresenter
 
     @Nullable

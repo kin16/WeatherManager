@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
-import android.widget.Button
 import com.example.weathermanager.R
-import android.widget.Toast
 import android.app.AlarmManager
 import android.content.Context.ALARM_SERVICE
 import androidx.core.content.ContextCompat.getSystemService
@@ -16,8 +14,9 @@ import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.util.Log
-import android.widget.CheckBox
-import android.widget.TimePicker
+import android.widget.*
+import androidx.core.content.ContextCompat.getDrawable
+import androidx.preference.PreferenceManager
 
 import com.example.weathermanager.TimeReceiver
 import kotlinx.android.synthetic.main.fragment_notifications.*
@@ -44,7 +43,26 @@ class NotificationsFragment : Fragment(),View.OnClickListener, TimePickerDialog.
         mButton!!.setOnClickListener(this)
         mCancel = v.findViewById(R.id.button2)
         mCancel!!.setOnClickListener(this)
-
+        val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
+        val prefTheme = prefs.getString("theme", "Green")
+        when(prefTheme){
+            "Green" -> {
+                mButton?.background = activity!!.getDrawable(R.color.greenPrimary)
+                mCancel?.background = activity!!.getDrawable(R.color.greenPrimary)
+            }
+            "Red" -> {
+                mButton?.background = activity!!.getDrawable(R.color.redPrimary)
+                mCancel?.background = activity!!.getDrawable(R.color.redPrimary)
+            }
+            "Blue" -> {
+                mButton?.background = activity!!.getDrawable(R.color.bluePrimary)
+                mCancel?.background = activity!!.getDrawable(R.color.bluePrimary)
+            }
+            "Grey" -> {
+                mButton?.background = activity!!.getDrawable(R.color.greyAccent)
+                mCancel?.background = activity!!.getDrawable(R.color.greyAccent)
+            }
+        }
         box = v.findViewById(R.id.box)
         return v
     }
