@@ -16,7 +16,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.example.weathermanager.R
 import com.example.weathermanager.model.WeatherAPI
 import com.example.weathermanager.model.WeatherDay
-import com.example.weathermanager.presenter.Presenter
+import com.example.weathermanager.presenter.ForecastPresenter
 
 class MyWidget : AppWidgetProvider() {
     val TAG = "MyWidget"
@@ -78,7 +78,7 @@ class MyWidget : AppWidgetProvider() {
                         data!!.city + " " + data.tempWithDegree
                     )
 
-                    Presenter.notification(data.tempInt, context)
+                    ForecastPresenter.notification(data.tempInt, context)
 
                     Glide.with(context)
                         .asBitmap()

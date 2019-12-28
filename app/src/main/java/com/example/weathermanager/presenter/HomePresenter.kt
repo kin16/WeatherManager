@@ -11,21 +11,23 @@ import kotlinx.android.synthetic.main.fragment_home.view.*
 class HomePresenter (model: Model){
     private val TAG = "HomePresenter"
     private val mModel = model
-    private lateinit var weatherDay:WeatherDay
+    //private lateinit var weatherDay:WeatherDay
 
     fun weather(v:View) {
         mModel.getWeather()
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                Log.d(TAG, "get weather")
+                Log.d(TAG, "Getting weather")
                 setViews(it, v)
             },{
-                Log.e("s", "Error")
+                Log.e(TAG, "Error")
             }
             )
     }
     private fun setViews(weatherDay: WeatherDay, v:View): View{
+        Log.d(TAG, "setViews")
+
         v.cardtemp.text = weatherDay.tempWithDegree
         v.carddescription.text = weatherDay.description
         v.pressure.text = "Атмосферное давление   -   " + weatherDay.pressure

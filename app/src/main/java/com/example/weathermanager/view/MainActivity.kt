@@ -2,22 +2,27 @@ package com.example.weathermanager.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.example.weathermanager.R
-import com.example.weathermanager.fragments.DashboardFragment
+import com.example.weathermanager.fragments.ForecastFragment
 import com.example.weathermanager.fragments.HomeFragment
-import com.example.weathermanager.fragments.NotificationsFragment
+import com.example.weathermanager.fragments.NotificationFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener{
+    private val TAG = "MainActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "OnCreate")
+
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         val prefTheme = prefs.getString("theme", "Green")
         when(prefTheme){
@@ -44,6 +49,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         supportFragmentManager.beginTransaction()
             .replace(fragment_container.id, fragment)
             .commit()
+        Log.d(TAG, "loadFragment -> $fragment")
         return true
     }
 
@@ -51,9 +57,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         lateinit var fragment:Fragment
         when(item.itemId){
             R.id.navigation_home -> fragment = HomeFragment()
-            R.id.navigation_notifications -> fragment = NotificationsFragment()
-            R.id.navigation_dashboard -> fragment = DashboardFragment()
+            R.id.navigation_notification -> fragment = NotificationFragment()
+            R.id.navigation_forecast -> fragment = ForecastFragment()
         }
+
+        Log.d(TAG, "OnNavigationItemSelected -> $fragment")
+
         return loadFragment(fragment)
     }
 
@@ -63,6 +72,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.d(TAG, "OnOptionsItemSelected")
+
         when (item.itemId) {
             R.id.about -> {
                 val intent = Intent(this, AboutActivity::class.java)

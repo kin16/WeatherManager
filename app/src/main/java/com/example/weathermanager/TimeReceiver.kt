@@ -19,14 +19,9 @@ import com.example.weathermanager.view.MainActivity
 class TimeReceiver : BroadcastReceiver(){
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        Toast.makeText(context, "Alarm work", Toast.LENGTH_SHORT).show()
-        Log.e("TimeReceiver", "Receive")
-        Log.e("TimeReceiver", "New Notification")
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context!!.startForegroundService(Intent(context, NotificationService::class.java))
-        } else {
-            context!!.startService(Intent(context, NotificationService::class.java))
-        }*/
+        //Toast.makeText(context, "Alarm work", Toast.LENGTH_SHORT).show()
+        Log.e("TimeReceiver", "Receive intent")
+        Log.e("TimeReceiver", "New Notification showing")
 
         val notificationManager =
             context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

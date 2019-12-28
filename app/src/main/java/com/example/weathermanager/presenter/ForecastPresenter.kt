@@ -11,12 +11,12 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.weathermanager.R
-import com.example.weathermanager.fragments.DashboardFragment
+import com.example.weathermanager.fragments.ForecastFragment
 import com.example.weathermanager.view.MainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class Presenter(model:Model, activity: DashboardFragment){
+class ForecastPresenter(model:Model, activity: ForecastFragment){
     private var TAG = "Presenter"
     private val activity = activity
     private val model = model
@@ -28,11 +28,11 @@ class Presenter(model:Model, activity: DashboardFragment){
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                Log.e(TAG, "get forecast")
-                val adapter = DashboardFragment.CardAdapter(it.items)
+                Log.e(TAG, "Getting forecast")
+                val adapter = ForecastFragment.CardAdapter(it.items)
                 activity.rec.adapter = adapter
             },{
-                Log.e("s", "Error")
+                Log.e(TAG, "Error")
             }
             )
     }
@@ -41,6 +41,8 @@ class Presenter(model:Model, activity: DashboardFragment){
     companion object {
         @JvmStatic
         fun notification(temp: Int, context: Context) {
+            Log.d("Presenter", "Notification")
+
             val notificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

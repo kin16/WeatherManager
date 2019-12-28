@@ -15,6 +15,7 @@ class Model{
     private var api = WeatherAPI.client!!.create(WeatherAPI.ApiInterface::class.java)
 
     fun getWeather(): Single<WeatherDay> {
+        Log.d(TAG, "Getting weather")
         return Single.create{ subscriber ->
             Log.d(TAG, "OK")
             val callToday = api.getToday(lat, lng, units, key)

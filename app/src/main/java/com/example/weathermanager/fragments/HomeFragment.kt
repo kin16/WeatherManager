@@ -1,6 +1,7 @@
 package com.example.weathermanager.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.example.weathermanager.model.Model
 import com.example.weathermanager.presenter.HomePresenter
 
 class HomeFragment : Fragment() {
+    private val TAG = "HomeFragment"
     private lateinit var presenter: HomePresenter
 
     @Nullable
@@ -21,6 +23,8 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d(TAG,  "OnCreateView")
+
         presenter = HomePresenter(Model())
         val v = inflater.inflate(R.layout.fragment_home, null)
         presenter.weather(v)

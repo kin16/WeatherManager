@@ -2,12 +2,11 @@ package com.example.weathermanager.fragments
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-
 import androidx.annotation.Nullable
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
@@ -16,17 +15,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weathermanager.R
 import com.example.weathermanager.model.Model
 import com.example.weathermanager.model.WeatherDay
-import com.example.weathermanager.presenter.Presenter
+import com.example.weathermanager.presenter.ForecastPresenter
 import java.util.*
 
-/**
- * Created by Belal on 1/23/2018.
- */
 
-class DashboardFragment : Fragment() {
-    private var TAG = "MainActivity"
+class ForecastFragment : Fragment() {
+    private var TAG = "ForecastFragment"
     lateinit var rec: RecyclerView
-    private lateinit var presenter: Presenter
+    private lateinit var presenter: ForecastPresenter
 
 
     @Nullable
@@ -36,10 +32,11 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d(TAG, "OnCreateView")
 
-        presenter = Presenter(Model(), this)
+        presenter = ForecastPresenter(Model(), this)
 
-        val view = inflater.inflate(R.layout.fragment_dashboard, null)
+        val view = inflater.inflate(R.layout.fragment_forecast, null)
         rec = view.findViewById(R.id.rv)
         val manager = GridLayoutManager(activity, 2)
         rec.layoutManager = manager
@@ -50,7 +47,7 @@ class DashboardFragment : Fragment() {
     }
 
     class CardAdapter(persons: List<WeatherDay>) : RecyclerView.Adapter<CardAdapter.CardHolder>() {
-
+        private val TAG = "CardAdapter"
         private var persons: List<WeatherDay>
 
         init {
@@ -58,10 +55,14 @@ class DashboardFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
+            Log.d(TAG, "Item count -> ${persons.size}")
+
             return persons.size
         }
 
         override fun onBindViewHolder(holder: CardHolder, position: Int) {
+            Log.d(TAG, "OnBindViewHolder")
+
             holder.ct.text = persons.get(position).tempWithDegree
             holder.co.text = persons.get(position).description
             //setImage(persons.get(position), holder.ci)
@@ -72,9 +73,11 @@ class DashboardFragment : Fragment() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {
-            val v =
+            Log.d(TAG, "OnCreateViewHolder")
 
+            val v =
                 LayoutInflater.from(parent.getContext()).inflate(R.layout.weather, parent, false)
+
             return CardHolder(v)
         }
 
@@ -89,7 +92,6 @@ class DashboardFragment : Fragment() {
                 ct = itemView.findViewById(R.id.cardtemp) as TextView
                 co = itemView.findViewById(R.id.carddescription) as TextView
                 cd = itemView.findViewById(R.id.carddate) as TextView
-
             }
         }
     }

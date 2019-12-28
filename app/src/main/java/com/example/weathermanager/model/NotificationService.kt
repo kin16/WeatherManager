@@ -15,18 +15,22 @@ import com.example.weathermanager.R
 import com.example.weathermanager.view.MainActivity
 
 class NotificationService : Service() {
+    private val TAG = "NotificationService"
+
     override fun onBind(intent: Intent?): IBinder? {
        return null
     }
 
     override fun onCreate() {
         startNotification()
-        Log.d("TimeReceiver", "Notification must work!!!")
+        Log.d(TAG, "Notification work!!!")
         stopForeground(false)
         super.onCreate()
     }
 
     private fun startNotification(){
+        Log.d(TAG, "Notification showing")
+
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
