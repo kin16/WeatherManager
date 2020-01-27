@@ -1,23 +1,22 @@
 package com.example.weathermanager.fragments
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.app.TimePickerDialog
+import android.content.Context.ALARM_SERVICE
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.Nullable
-import androidx.fragment.app.Fragment
-import com.example.weathermanager.R
-import android.app.AlarmManager
-import android.content.Context.ALARM_SERVICE
-import android.app.PendingIntent
-import android.app.TimePickerDialog
-import android.content.Intent
-import android.util.Log
 import android.widget.*
+import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-
+import com.example.weathermanager.R
 import com.example.weathermanager.TimeReceiver
 import kotlinx.android.synthetic.main.fragment_notification.*
+import org.jetbrains.annotations.Nullable
 import java.util.*
 
 
@@ -25,6 +24,7 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
     private var mButton:Button? = null
     private var mCancel:Button? = null
     private var alarmManager:AlarmManager? = null
+    private var text:TextView? = null
     private var box:CheckBox? = null
     private val TAG = "NotificationFragment"
 
@@ -65,6 +65,11 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
             }
         }
         box = v.findViewById(R.id.box)
+
+        text = v.findViewById(R.id.clock)
+        val currentTime = Calendar.getInstance()
+
+        text?.text = currentTime.get(Calendar.HOUR).toString() + ":" + currentTime.get(Calendar.MINUTE).toString()
         return v
     }
 
@@ -95,11 +100,20 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
 
         val pendingIntent = PendingIntent.getBroadcast(activity, 0, alarmIntent, 0)
 
+        val currentTime = Calendar.getInstance()
         val cal = Calendar.getInstance()
 
         cal.setTimeInMillis(System.currentTimeMillis())
         cal.set(Calendar.HOUR_OF_DAY, hourOfDay)
         cal.set(Calendar.MINUTE, minute)
+
+
+        Log.d(TAG, "${cal.time}, ${currentTime.time}")
+
+        if(currentTime.time > cal.time){
+            cal.set(Calendar.DATE, currentTime.get(Calendar.DATE) + 1)
+        }
+        Log.d(TAG, "${cal.time}, ${currentTime.time}")
 
         val text = clock
         text.text = cal.get(Calendar.HOUR_OF_DAY).toString() + ":" + cal.get(Calendar.MINUTE).toString()
