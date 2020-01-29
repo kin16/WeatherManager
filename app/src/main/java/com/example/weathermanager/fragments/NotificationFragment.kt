@@ -3,8 +3,10 @@ package com.example.weathermanager.fragments
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +19,7 @@ import com.example.weathermanager.R
 import com.example.weathermanager.TimeReceiver
 import kotlinx.android.synthetic.main.fragment_notification.*
 import org.jetbrains.annotations.Nullable
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -26,7 +29,10 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
     private var alarmManager:AlarmManager? = null
     private var text:TextView? = null
     private var box:CheckBox? = null
+    private var set:TextView? = null
+    private var date:TextView? = null
     private val TAG = "NotificationFragment"
+    private lateinit var pref:SharedPreferences
 
     var DIALOG_TIME = "Time"
 
@@ -70,7 +76,32 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
         val currentTime = Calendar.getInstance()
 
         text?.text = currentTime.get(Calendar.HOUR).toString() + ":" + currentTime.get(Calendar.MINUTE).toString()
+
+        date = v.findViewById(R.id.date)
+        date?.text = ""
+        set = v.findViewById(R.id.set)
+        set?.text = ""
+
+        loadDate()
+
         return v
+    }
+
+
+    private fun saveDate(){
+        pref = PreferenceManager.getDefaultSharedPreferences(activity)
+        val ed: SharedPreferences.Editor = pref.edit()
+        ed.putString("time", text?.text.toString())
+        ed.putString("date", date?.text.toString())
+        ed.putString("set", set?.text.toString())
+        ed.commit()
+    }
+
+    private fun loadDate(){
+        pref = PreferenceManager.getDefaultSharedPreferences(activity)
+        text?.text = pref.getString("time", "00:00")
+        date?.text = pref.getString("date", "")
+        set?.text = pref.getString("set", "")
     }
 
     override fun onClick(v: View?) {
@@ -86,6 +117,9 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
 
                 alarmManager = activity!!.getSystemService(ALARM_SERVICE) as AlarmManager?
 
+                set?.text = ""
+                date?.text = ""
+                text?.text = "00:00"
                 Log.d("TimeReceiver", "Canceled")
                 alarmManager!!.cancel(pendingIntent)
             }
@@ -118,6 +152,11 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
         val text = clock
         text.text = cal.get(Calendar.HOUR_OF_DAY).toString() + ":" + cal.get(Calendar.MINUTE).toString()
 
+        date?.text = SimpleDateFormat("dd, MMM").format(cal.getTime())
+        set?.text = "Уведомление установлено:"
+
+        saveDate()
+
         Toast.makeText(activity, "Time set: HOUR $hourOfDay, MINUTE $minute", Toast.LENGTH_LONG).show()
         Log.d(TAG, "Time set: HOUR $hourOfDay, MINUTE $minute")
         alarmManager = activity!!.getSystemService(ALARM_SERVICE) as AlarmManager?
@@ -131,5 +170,10 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
             alarmManager!!.set(AlarmManager.RTC_WAKEUP, cal.timeInMillis, pendingIntent)
             Log.d(TAG, "No repeat")
         }
+    }
+
+    override fun onPause() {
+        saveDate()
+        super.onPause()
     }
 }

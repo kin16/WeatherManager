@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.util.Log
 import android.widget.Toast
@@ -13,6 +14,7 @@ import com.example.weathermanager.model.NotificationService
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.preference.PreferenceManager
 import com.example.weathermanager.view.MainActivity
 
 
@@ -57,6 +59,17 @@ class TimeReceiver : BroadcastReceiver(){
 
         val notification = builder.build()
 
+        setDate(context)
+
         notificationManager.notify(1, notification)
+    }
+
+    private fun setDate(context: Context?){
+        val pref = PreferenceManager.getDefaultSharedPreferences(context)
+        val ed: SharedPreferences.Editor = pref.edit()
+        ed.putString("time", "00:00")
+        ed.putString("date", "")
+        ed.putString("set", "")
+        ed.commit()
     }
 }
