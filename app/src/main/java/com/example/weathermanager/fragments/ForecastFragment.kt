@@ -1,6 +1,5 @@
 package com.example.weathermanager.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,18 +8,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.Nullable
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weathermanager.R
 import com.example.weathermanager.model.Model
 import com.example.weathermanager.model.WeatherDay
 import com.example.weathermanager.presenter.ForecastPresenter
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import java.text.SimpleDateFormat
-import java.util.*
+
 
 
 class ForecastFragment : Fragment() {

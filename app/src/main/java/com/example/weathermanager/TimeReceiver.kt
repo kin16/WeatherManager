@@ -9,11 +9,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.util.Log
-import android.widget.Toast
-import com.example.weathermanager.model.NotificationService
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.preference.PreferenceManager
 import com.example.weathermanager.view.MainActivity
 

@@ -12,7 +12,7 @@ data class WeatherDay(
     @field:SerializedName("clouds") private val clouds:Clouds
     //@field:SerializedName("wind") private val rain: Rain,
     //@field:SerializedName("wind") private val snow: Snow
-     ) {
+) {
 
     @SerializedName("name")
     val city: String? = null
