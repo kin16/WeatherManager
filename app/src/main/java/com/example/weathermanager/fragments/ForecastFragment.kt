@@ -6,16 +6,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.Nullable
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weathermanager.R
 import com.example.weathermanager.model.Model
 import com.example.weathermanager.model.WeatherDay
 import com.example.weathermanager.presenter.ForecastPresenter
+import kotlinx.android.synthetic.main.fragment_home.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -38,7 +42,7 @@ class ForecastFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_forecast, null)
         rec = view.findViewById(R.id.rv)
-        val manager = GridLayoutManager(activity, 2)
+        val manager = LinearLayoutManager(activity)
         rec.layoutManager = manager
         rec.setHasFixedSize(true)
         presenter.forecast()
@@ -63,35 +67,74 @@ class ForecastFragment : Fragment() {
         override fun onBindViewHolder(holder: CardHolder, position: Int) {
             Log.d(TAG, "OnBindViewHolder")
 
-            holder.ct.text = persons.get(position).tempWithDegree
-            holder.co.text = persons.get(position).description
-            //setImage(persons.get(position), holder.ci)
-            holder.cd.text = persons.get(position).date.time.toString()
-            val rnd = Random()
-            val currentColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-            holder.cv.setCardBackgroundColor(currentColor)
+            val person = persons.get(position)
+
+            val dateFormat = SimpleDateFormat("EEEEE dd.MM.yy - HH:mm")
+            dateFormat.setTimeZone(person.date.getTimeZone())
+            holder.date.text = dateFormat.format(person.date.time)
+
+
+            holder.description.text = person.description
+            holder.wind.text = "Скорость ветра: " + person.speed.toString()
+            Log.d(TAG, "WIND: ${person.speed}")
+
+            holder.pressure.text = "Давление: " + person.pressure
+            holder.humidity.text = "Влажность: " + person.humidity
+
+            holder.temp.text = person.tempWithDegree
+            setImage(person, holder.icon)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {
             Log.d(TAG, "OnCreateViewHolder")
-
             val v =
                 LayoutInflater.from(parent.getContext()).inflate(R.layout.weather, parent, false)
 
             return CardHolder(v)
         }
 
+        fun setImage(data: WeatherDay, view: ImageView) {
+            when (data.icon) {
+                "01d" -> view.setImageResource(R.drawable.sun)
+                "01n" -> view.setImageResource(R.drawable.moon)
+                "02d" -> view.setImageResource(R.drawable.cloudy_sun)
+                "02n" -> view.setImageResource(R.drawable.cloudy_moon)
+                "03d" -> view.setImageResource(R.drawable.clouds)
+                "03n" -> view.setImageResource(R.drawable.clouds)
+                "04d" -> view.setImageResource(R.drawable.hard_clouds)
+                "04n" -> view.setImageResource(R.drawable.hard_clouds)
+                "09d" -> view.setImageResource(R.drawable.shower_rain)
+                "09n" -> view.setImageResource(R.drawable.shower_rain)
+                "10d" -> view.setImageResource(R.drawable.rain)
+                "10n" -> view.setImageResource(R.drawable.rain)
+                "11d" -> view.setImageResource(R.drawable.storm)
+                "11n" -> view.setImageResource(R.drawable.storm)
+                "12d" -> view.setImageResource(R.drawable.winter)
+                "12n" -> view.setImageResource(R.drawable.winter)
+                "13d" -> view.setImageResource(R.drawable.mist)
+                "13n" -> view.setImageResource(R.drawable.mist)
+            }
+        }
+
         class CardHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            var cv: CardView
-            var ct: TextView
-            var co: TextView
-            var cd: TextView
+           // var card:CardView
+            var date: TextView
+            var description: TextView
+            var wind: TextView
+            var pressure: TextView
+            var humidity: TextView
+            var temp: TextView
+            var icon: ImageView
 
             init {
-                cv = itemView.findViewById(R.id.card) as CardView
-                ct = itemView.findViewById(R.id.cardtemp) as TextView
-                co = itemView.findViewById(R.id.carddescription) as TextView
-                cd = itemView.findViewById(R.id.carddate) as TextView
+                //card = itemView.findViewById(R.id.card)
+                date = itemView.findViewById(R.id.itemDate)
+                description = itemView.findViewById(R.id.itemDescription)
+                wind = itemView.findViewById(R.id.itemWind)
+                pressure = itemView.findViewById(R.id.itemPressure)
+                humidity = itemView.findViewById(R.id.itemHumidity)
+                temp = itemView.findViewById(R.id.itemTemperature)
+                icon = itemView.findViewById(R.id.itemIcon)
             }
         }
     }
