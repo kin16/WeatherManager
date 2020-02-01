@@ -33,6 +33,13 @@
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
+    <style name="StartTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/greyPrimary</item>
+        <item name="colorPrimaryDark">@color/greyPrimaryDark</item>
+        <item name="colorAccent">@color/greyAccent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
     <style name="MyCardViewStyle" parent="android:Theme.Material.Light">
         <item name="cardCornerRadius">2dp</item>
         <item name="cardElevation">2dp</item>

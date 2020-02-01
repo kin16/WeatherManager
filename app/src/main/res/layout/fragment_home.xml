@@ -28,7 +28,8 @@
             android:contentDescription="@string/weather"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/cloudy_sun"/>
+            android:src="@drawable/cloudy_sun"
+            android:layout_marginLeft="10dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
