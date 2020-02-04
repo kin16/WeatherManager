@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import android.widget.Toast
 import androidx.preference.PreferenceManager
 import com.example.weathermanager.R
 import com.example.weathermanager.fragments.ForecastFragment
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener{
     private val TAG = "MainActivity"
+    lateinit var navigation:BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "OnCreate")
@@ -35,7 +37,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setContentView(R.layout.activity_main)
         loadFragment(HomeFragment())
 
-        val navigation = findViewById<BottomNavigationView>(R.id.navigation)
+        navigation = findViewById(R.id.navigation)
         when(prefTheme) {
             "Green" -> navigation.background = getDrawable(R.color.greenPrimary)
             "Red" -> navigation.background = getDrawable(R.color.redPrimary)
@@ -48,6 +50,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private fun loadFragment(fragment:Fragment) : Boolean{
         supportFragmentManager.beginTransaction()
             .replace(fragment_container.id, fragment)
+            .addToBackStack(null)
             .commit()
         Log.d(TAG, "loadFragment -> $fragment")
         return true
@@ -86,6 +89,19 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onBackPressed() {
+        val count = getSupportFragmentManager().getBackStackEntryCount()
+
+        if(count == 1) {
+            super.onBackPressed()
+            Toast.makeText(this, "Finishing... $count", Toast.LENGTH_SHORT).show()
+            finish()
+        }else{
+            Toast.makeText(this, "Count -> $count", Toast.LENGTH_SHORT).show()
+            super.onBackPressed()
         }
     }
 }

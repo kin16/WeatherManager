@@ -13,15 +13,16 @@ class SplashActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val isFirstStart = true//getPrefs.getBoolean(FIRST_START, true)
+
+        val getPrefs: SharedPreferences = PreferenceManager
+            .getDefaultSharedPreferences(baseContext)
+        val isFirstStart = getPrefs.getBoolean(FIRST_START, true)
+
         if (isFirstStart) {
-
             val t = Thread(Runnable {
-            val getPrefs: SharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(baseContext)
-
                 val i = Intent(this, CustomIntro::class.java)
                 startActivity(i)
+                finish()
                 val e = getPrefs.edit()
                 e.putBoolean(FIRST_START, false)
                 e.apply()

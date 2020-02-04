@@ -4,7 +4,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import com.example.weathermanager.model.Model
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -12,11 +11,12 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.weathermanager.R
 import com.example.weathermanager.fragments.ForecastFragment
+import com.example.weathermanager.model.Model
 import com.example.weathermanager.view.MainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class ForecastPresenter(model:Model, activity: ForecastFragment){
+class ForecastPresenter(model: Model, activity: ForecastFragment){
     private var TAG = "Presenter"
     private val activity = activity
     private val model = model

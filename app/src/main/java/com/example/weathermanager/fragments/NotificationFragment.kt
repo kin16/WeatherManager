@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.example.weathermanager.R
 import com.example.weathermanager.TimeReceiver
+import com.example.weathermanager.view.MainActivity
 import kotlinx.android.synthetic.main.fragment_notification.*
 import org.jetbrains.annotations.Nullable
 import java.text.SimpleDateFormat
@@ -44,6 +45,7 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
         savedInstanceState: Bundle?
     ): View? {
         Log.d(TAG, "OnCreateView")
+        (activity as MainActivity).navigation.menu.getItem(2).isChecked = true
 
         val v = inflater.inflate(R.layout.fragment_notification, null)
         mButton = v.findViewById(R.id.button)

@@ -15,6 +15,7 @@ import com.example.weathermanager.R
 import com.example.weathermanager.model.Model
 import com.example.weathermanager.model.WeatherDay
 import com.example.weathermanager.presenter.ForecastPresenter
+import com.example.weathermanager.view.MainActivity
 import java.text.SimpleDateFormat
 
 
@@ -33,6 +34,7 @@ class ForecastFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d(TAG, "OnCreateView")
+        (activity as MainActivity).navigation.menu.getItem(1).isChecked = true
 
         presenter = ForecastPresenter(Model(), this)
 

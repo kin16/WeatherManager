@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.example.weathermanager.R
 import com.example.weathermanager.model.Model
 import com.example.weathermanager.presenter.HomePresenter
+import com.example.weathermanager.view.MainActivity
 
 class HomeFragment : Fragment() {
     private val TAG = "HomeFragment"
@@ -24,6 +25,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d(TAG,  "OnCreateView")
+        (activity as MainActivity).navigation.menu.getItem(0).isChecked = true
 
         presenter = HomePresenter(Model())
         val v = inflater.inflate(R.layout.fragment_home, null)
