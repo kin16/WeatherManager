@@ -43,7 +43,7 @@ class ForecastFragment : Fragment() {
         val manager = LinearLayoutManager(activity)
         rec.layoutManager = manager
         rec.setHasFixedSize(true)
-        presenter.forecast()
+        presenter.forecast(context!!)
 
         return view
     }

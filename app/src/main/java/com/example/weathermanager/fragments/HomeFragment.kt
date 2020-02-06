@@ -29,7 +29,7 @@ class HomeFragment : Fragment() {
 
         presenter = HomePresenter(Model())
         val v = inflater.inflate(R.layout.fragment_home, null)
-        presenter.weather(v)
+        presenter.weather(v, context!!)
         return v
     }
 }

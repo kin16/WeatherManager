@@ -23,8 +23,8 @@ class ForecastPresenter(model: Model, activity: ForecastFragment){
 
 
 
-    fun forecast() {
-        model.getForecast()
+    fun forecast(context: Context) {
+        model.getForecast(context)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

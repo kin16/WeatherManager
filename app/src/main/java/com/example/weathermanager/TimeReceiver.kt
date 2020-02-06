@@ -58,7 +58,7 @@ class TimeReceiver : BroadcastReceiver(){
         val pendingIntent = PendingIntent.getActivity(context, 0, ii, 0)
 
 
-        val builder = NotificationCompat.Builder(context)
+        val builder = NotificationCompat.Builder(context, "")
             .setSmallIcon(R.drawable.icon)
             .setContentTitle("Title")
             .setContentText("Notification text")
@@ -84,7 +84,7 @@ class TimeReceiver : BroadcastReceiver(){
     }
 
     fun weather(context: Context?) {
-        Model().getWeather()
+        Model().getWeather(context!!)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

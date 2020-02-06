@@ -1,33 +1,42 @@
 package com.example.weathermanager.view
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.location.*
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import android.widget.Toast
 import androidx.preference.PreferenceManager
 import com.example.weathermanager.R
 import com.example.weathermanager.fragments.ForecastFragment
 import com.example.weathermanager.fragments.HomeFragment
 import com.example.weathermanager.fragments.NotificationFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.IOException
+import java.util.*
 
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener{
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     private val TAG = "MainActivity"
-    lateinit var navigation:BottomNavigationView
+    lateinit var navigation: BottomNavigationView
+    var location: Location? = null
+    private lateinit var prefs:SharedPreferences
 
+    @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "OnCreate")
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
         val prefTheme = prefs.getString("theme", "Green")
-        when(prefTheme){
+        when (prefTheme) {
             "Green" -> setTheme(R.style.GreenTheme)
             "Red" -> setTheme(R.style.RedTheme)
             "Blue" -> setTheme(R.style.BlueTheme)
@@ -38,27 +47,47 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         loadFragment(HomeFragment())
 
         navigation = findViewById(R.id.navigation)
-        when(prefTheme) {
+        when (prefTheme) {
             "Green" -> navigation.background = getDrawable(R.color.greenPrimary)
             "Red" -> navigation.background = getDrawable(R.color.redPrimary)
             "Blue" -> navigation.background = getDrawable(R.color.bluePrimary)
             "Grey" -> navigation.background = getDrawable(R.color.greyPrimary)
         }
         navigation.setOnNavigationItemSelectedListener(this)
+
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        Log.d("BluetoothCommManager", "Providers: " + locationManager.getAllProviders());
+        Log.d("BluetoothCommManager", "isProviderEnabled (Network): " + locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER));
+        Log.d("BluetoothCommManager", "isProviderEnabled (GPS): " + locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER));
+        Log.d("BluetoothCommManager", "isProviderEnabled (PASSIVE_PROVIDER): " + locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER));
+        Log.d("BluetoothCommManager", "isProviderEnabled (FUSED_PROVIDER): " + locationManager.isProviderEnabled("fused"));
+
+
+        val locationListener: LocationListener = MyLocationListener(this)
+        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER, 5000, 1f, locationListener)
+        }else{
+            locationManager.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER, 5000, 1f, locationListener)
+        }
+
+        Log.w(TAG, "loc -> $location")
     }
 
-    private fun loadFragment(fragment:Fragment) : Boolean{
+    private fun loadFragment(fragment: Fragment): Boolean {
         supportFragmentManager.beginTransaction()
             .replace(fragment_container.id, fragment)
             .addToBackStack(null)
             .commit()
-        Log.d(TAG, "loadFragment -> $fragment")
+        Log.e(TAG, "loadFragment -> $fragment")
         return true
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        lateinit var fragment:Fragment
-        when(item.itemId){
+        lateinit var fragment: Fragment
+        when (item.itemId) {
             R.id.navigation_home -> fragment = HomeFragment()
             R.id.navigation_notification -> fragment = NotificationFragment()
             R.id.navigation_forecast -> fragment = ForecastFragment()
@@ -92,16 +121,45 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
+    fun setLoc(loc: Location){
+        location = loc
+        val ed = prefs.edit()
+        ed.putFloat("lat", loc.latitude.toFloat())
+        ed.putFloat("lng", loc.longitude.toFloat())
+        ed.apply()
+        Toast.makeText(this, "${prefs.getFloat("lng", 0f)}", Toast.LENGTH_SHORT).show()
+    }
+
     override fun onBackPressed() {
         val count = getSupportFragmentManager().getBackStackEntryCount()
+        super.onBackPressed()
 
         if(count == 1) {
-            super.onBackPressed()
-            Toast.makeText(this, "Finishing... $count", Toast.LENGTH_SHORT).show()
             finish()
-        }else{
-            Toast.makeText(this, "Count -> $count", Toast.LENGTH_SHORT).show()
-            super.onBackPressed()
+        }
+    }
+
+    private class MyLocationListener(context: MainActivity) : LocationListener {
+        val context = context
+        override fun onLocationChanged(loc: Location) {
+            val TAG = "MyLocationListener"
+            Toast.makeText(context, "work", Toast.LENGTH_SHORT).show()
+            Log.w(TAG, "Location changed: Lat: ${loc.getLatitude().toString()} Lng: ${loc.getLongitude()}")
+            val longitude = "Longitude: " + loc.getLongitude()
+            Log.w(TAG, longitude)
+            val latitude = "Latitude: " + loc.getLatitude()
+            Log.w(TAG, latitude)
+            /*------- To get city name from coordinates -------- */
+            context.setLoc(loc)
+        }
+
+        override fun onProviderDisabled(provider: String) {}
+        override fun onProviderEnabled(provider: String) {}
+        override fun onStatusChanged(
+            provider: String,
+            status: Int,
+            extras: Bundle
+        ) {
         }
     }
 }
