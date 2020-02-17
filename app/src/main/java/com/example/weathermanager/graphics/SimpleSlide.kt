@@ -1,4 +1,4 @@
-package com.example.weathermanager.onboarding
+package com.example.weathermanager.graphics
 
 import android.graphics.Color
 import android.os.Bundle
@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.annotations.Nullable
 
 
-class SampleSlide : Fragment(), ISlideBackgroundColorHolder {
+class SimpleSlide : Fragment(), ISlideBackgroundColorHolder {
     private var layoutResId = 0
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +37,8 @@ class SampleSlide : Fragment(), ISlideBackgroundColorHolder {
 
     companion object {
         private const val ARG_LAYOUT_RES_ID = "layoutResId"
-        fun newInstance(layoutResId: Int): SampleSlide {
-            val sampleSlide = SampleSlide()
+        fun newInstance(layoutResId: Int): SimpleSlide {
+            val sampleSlide = SimpleSlide()
             val args = Bundle()
             args.putInt(ARG_LAYOUT_RES_ID, layoutResId)
             sampleSlide.setArguments(args)

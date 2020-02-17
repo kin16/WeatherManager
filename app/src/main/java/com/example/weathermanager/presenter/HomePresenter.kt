@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.preference.PreferenceManager
 import com.example.weathermanager.R
+import com.example.weathermanager.fragments.HomeFragment
 import com.example.weathermanager.model.Model
 import com.example.weathermanager.model.WeatherDay
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -24,19 +25,19 @@ class HomePresenter (model: Model){
     private val mModel = model
     //private lateinit var weatherDay:WeatherDay
 
-    fun weather(v:View, context: Context) {
+    fun weather(v:View, context: Context, fragment: HomeFragment) {
         mModel.getWeather(context)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.d(TAG, "Getting weather")
-                setViews(it, v, context)
+                setViews(it, v, context, fragment)
             },{
                 Log.e(TAG, "Error")
             }
             )
     }
-    private fun setViews(weatherDay: WeatherDay, v:View, context: Context): View{
+    private fun setViews(weatherDay: WeatherDay, v:View, context: Context, fragment:HomeFragment): View{
         Log.d(TAG, "setViews")
 
         v.cardtemp.text = weatherDay.tempWithDegree
@@ -53,15 +54,26 @@ class HomePresenter (model: Model){
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-        v.tcity.text = setCity(prefs.getFloat("lat", 0f).toDouble(),
+        val city = setCity(prefs.getFloat("lat", 0f).toDouble(),
             prefs.getFloat("lng", 0f).toDouble(), context)
+
+        if (city != null && city != "") {
+            v.tcity.text = city
+        }else{
+            v.tcity.text = "Город не определен"
+            Toast.makeText(context, "Включите gps и перезапустите приложение", Toast.LENGTH_LONG).show();
+        }
 
         val image = v.findViewById<ImageView>(R.id.icon_weather)
         setImage(weatherDay, image)
+
+        if(fragment.progressDialog.isShowing){
+            fragment.progressDialog.dismiss()
+        }
         return v
     }
 
-    fun setCity(lat:Double, lng:Double, context: Context): String{
+    fun setCity(lat:Double, lng:Double, context: Context): String?{
         var cityName: String? = null
         val gcd = Geocoder(context, Locale.getDefault())
         val addresses: List<Address>
@@ -79,9 +91,9 @@ class HomePresenter (model: Model){
         val s = (lng.toString() + "\n" + lat + "\n\nMy Current City is: "
                 + cityName)
 
-        Toast.makeText(context, s, Toast.LENGTH_LONG).show()
+        //Toast.makeText(context, s, Toast.LENGTH_LONG).show()
 
-        return cityName!!
+        return cityName
     }
 
     fun setImage(data: WeatherDay, view: ImageView) {

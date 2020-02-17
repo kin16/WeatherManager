@@ -17,14 +17,14 @@ import com.example.weathermanager.model.WeatherDay
 import com.example.weathermanager.presenter.ForecastPresenter
 import com.example.weathermanager.view.MainActivity
 import java.text.SimpleDateFormat
-
+import com.example.weathermanager.graphics.*
 
 
 class ForecastFragment : Fragment() {
     private var TAG = "ForecastFragment"
     lateinit var rec: RecyclerView
     private lateinit var presenter: ForecastPresenter
-
+    lateinit var progressDialog: MyProgressDialog
 
     @Nullable
     @Override
@@ -33,6 +33,8 @@ class ForecastFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        progressDialog = MyProgressDialog.show(activity, null, null, true)
+
         Log.d(TAG, "OnCreateView")
         (activity as MainActivity).navigation.menu.getItem(1).isChecked = true
 
@@ -43,14 +45,15 @@ class ForecastFragment : Fragment() {
         val manager = LinearLayoutManager(activity)
         rec.layoutManager = manager
         rec.setHasFixedSize(true)
-        presenter.forecast(context!!)
+        presenter.forecast(context!!, this)
 
         return view
     }
 
-    class CardAdapter(persons: List<WeatherDay>) : RecyclerView.Adapter<CardAdapter.CardHolder>() {
+   class CardAdapter(persons: List<WeatherDay>, fragment: ForecastFragment) : RecyclerView.Adapter<CardAdapter.CardHolder>() {
         private val TAG = "CardAdapter"
         private var persons: List<WeatherDay>
+        private val fragment = fragment
 
         init {
             this.persons = persons
@@ -81,6 +84,10 @@ class ForecastFragment : Fragment() {
 
             holder.temp.text = person.tempWithDegree
             setImage(person, holder.icon)
+
+            if (fragment.progressDialog.isShowing){
+                fragment.progressDialog.dismiss()
+            }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {

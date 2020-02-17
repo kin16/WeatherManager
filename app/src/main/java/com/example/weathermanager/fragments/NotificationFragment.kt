@@ -53,7 +53,7 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
         mCancel = v.findViewById(R.id.button2)
         mCancel!!.setOnClickListener(this)
         val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
-        val prefTheme = prefs.getString("theme", "Green")
+        val prefTheme = prefs.getString("theme", "Grey")
         when(prefTheme){
             "Green" -> {
                 mButton?.background = activity!!.getDrawable(R.color.greenPrimary)

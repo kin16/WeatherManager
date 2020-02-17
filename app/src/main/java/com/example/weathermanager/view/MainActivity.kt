@@ -1,9 +1,11 @@
 package com.example.weathermanager.view
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.location.*
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +13,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.example.weathermanager.R
@@ -19,9 +23,6 @@ import com.example.weathermanager.fragments.HomeFragment
 import com.example.weathermanager.fragments.NotificationFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.IOException
-import java.util.*
-
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     private val TAG = "MainActivity"
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
-        val prefTheme = prefs.getString("theme", "Green")
+        val prefTheme = prefs.getString("theme", "Grey")
         when (prefTheme) {
             "Green" -> setTheme(R.style.GreenTheme)
             "Red" -> setTheme(R.style.RedTheme)
@@ -62,18 +63,38 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         Log.d("BluetoothCommManager", "isProviderEnabled (PASSIVE_PROVIDER): " + locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER));
         Log.d("BluetoothCommManager", "isProviderEnabled (FUSED_PROVIDER): " + locationManager.isProviderEnabled("fused"));
 
-
-        val locationListener: LocationListener = MyLocationListener(this)
-        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 5000, 1f, locationListener)
-        }else{
-            locationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 5000, 1f, locationListener)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                13)
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                13)
         }
 
-        Log.w(TAG, "loc -> $location")
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+            val locationListener: LocationListener = MyLocationListener(this)
+            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER, 5000, 1f, locationListener
+                )
+            } else {
+                locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER, 5000, 1f, locationListener
+                )
+            }
+
+            Log.w(TAG, "loc -> $location")
+        }else{
+            location = Location("")
+            location!!.latitude = prefs.getFloat("lat", 0f).toDouble()
+            location!!.latitude = prefs.getFloat("lat", 0f).toDouble()
+            Toast.makeText(this, "lat ${location!!.latitude}, lng ${location!!.longitude}", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun loadFragment(fragment: Fragment): Boolean {
@@ -88,7 +109,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         lateinit var fragment: Fragment
         when (item.itemId) {
-            R.id.navigation_home -> fragment = HomeFragment()
+            R.id.navigation_home -> {
+                getLocation()
+                fragment = HomeFragment()
+            }
             R.id.navigation_notification -> fragment = NotificationFragment()
             R.id.navigation_forecast -> fragment = ForecastFragment()
         }
@@ -127,7 +151,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         ed.putFloat("lat", loc.latitude.toFloat())
         ed.putFloat("lng", loc.longitude.toFloat())
         ed.apply()
-        Toast.makeText(this, "${prefs.getFloat("lng", 0f)}", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "${prefs.getFloat("lng", 0f)}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onBackPressed() {
@@ -139,11 +163,35 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
+    fun getLocation(){
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+                val locationListener: LocationListener = MyLocationListener(this)
+                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER, 5000, 1f, locationListener
+                    )
+                } else {
+                    locationManager.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER, 5000, 1f, locationListener
+                    )
+                }
+
+                Log.w(TAG, "loc -> $location")
+            }
+        }
+    }
+
     private class MyLocationListener(context: MainActivity) : LocationListener {
         val context = context
         override fun onLocationChanged(loc: Location) {
             val TAG = "MyLocationListener"
-            Toast.makeText(context, "work", Toast.LENGTH_SHORT).show()
+           // Toast.makeText(context, "work", Toast.LENGTH_SHORT).show()
             Log.w(TAG, "Location changed: Lat: ${loc.getLatitude().toString()} Lng: ${loc.getLongitude()}")
             val longitude = "Longitude: " + loc.getLongitude()
             Log.w(TAG, longitude)

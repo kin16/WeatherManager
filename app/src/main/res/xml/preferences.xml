@@ -14,7 +14,7 @@
             android:title="Color Theme"
             android:summary="This theme of color in application"
             android:key="theme"
-            android:defaultValue="green"
+            android:defaultValue="Grey"
             android:entries="@array/listThemes"
             android:entryValues="@array/listThemes"/>
         <CheckBoxPreference android:title="Dark Mode"

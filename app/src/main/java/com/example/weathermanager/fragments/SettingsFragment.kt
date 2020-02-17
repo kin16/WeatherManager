@@ -20,7 +20,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     fun getPrefs(){
         var prefs = PreferenceManager.getDefaultSharedPreferences(activity)
         prefDark = prefs.getBoolean("prefCheck", false)
-        prefTheme = prefs.getString("theme", "green")
+        prefTheme = prefs.getString("theme", "grey")
         prefPeriod = prefs.getString("list", "12")
         Log.d(TAG, "Getting preferences")
     }

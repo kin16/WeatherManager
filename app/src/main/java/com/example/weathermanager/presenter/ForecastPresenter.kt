@@ -21,15 +21,13 @@ class ForecastPresenter(model: Model, activity: ForecastFragment){
     private val activity = activity
     private val model = model
 
-
-
-    fun forecast(context: Context) {
+    fun forecast(context: Context, fragment:ForecastFragment) {
         model.getForecast(context)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.e(TAG, "Getting forecast")
-                val adapter = ForecastFragment.CardAdapter(it.items)
+                val adapter = ForecastFragment.CardAdapter(it.items, fragment)
                 activity.rec.adapter = adapter
             },{
                 Log.e(TAG, "Error")

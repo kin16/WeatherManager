@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
-import com.example.weathermanager.onboarding.CustomIntro
+import com.example.weathermanager.graphics.CustomIntro
 
 
 class SplashActivity : AppCompatActivity(){
