@@ -3,7 +3,6 @@ package com.example.weathermanager.fragments
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.app.TimePickerDialog
-import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.content.SharedPreferences
@@ -35,7 +34,7 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
     private val TAG = "NotificationFragment"
     private lateinit var pref:SharedPreferences
 
-    var DIALOG_TIME = "Time"
+    private var DIALOG_TIME = "Time"
 
     @Nullable
     @Override
@@ -53,8 +52,7 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
         mCancel = v.findViewById(R.id.button2)
         mCancel!!.setOnClickListener(this)
         val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
-        val prefTheme = prefs.getString("theme", "Grey")
-        when(prefTheme){
+        when(prefs.getString("theme", "Grey")){
             "Green" -> {
                 mButton?.background = activity!!.getDrawable(R.color.greenPrimary)
                 mCancel?.background = activity!!.getDrawable(R.color.greenPrimary)
@@ -96,7 +94,7 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
         ed.putString("time", text?.text.toString())
         ed.putString("date", date?.text.toString())
         ed.putString("set", set?.text.toString())
-        ed.commit()
+        ed.apply()
     }
 
     private fun loadDate(){
@@ -139,7 +137,7 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
         val currentTime = Calendar.getInstance()
         val cal = Calendar.getInstance()
 
-        cal.setTimeInMillis(System.currentTimeMillis())
+        cal.timeInMillis = System.currentTimeMillis()
         cal.set(Calendar.HOUR_OF_DAY, hourOfDay)
         cal.set(Calendar.MINUTE, minute)
 
@@ -154,7 +152,7 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
         val text = clock
         text.text = cal.get(Calendar.HOUR_OF_DAY).toString() + ":" + cal.get(Calendar.MINUTE).toString()
 
-        date?.text = SimpleDateFormat("dd, MMM").format(cal.getTime())
+        date?.text = SimpleDateFormat("dd, MMM").format(cal.time)
         set?.text = "Уведомление установлено:"
 
         saveDate()

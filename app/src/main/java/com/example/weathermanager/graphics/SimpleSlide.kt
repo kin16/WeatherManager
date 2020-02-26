@@ -16,8 +16,8 @@ class SimpleSlide : Fragment(), ISlideBackgroundColorHolder {
     private var layoutResId = 0
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (getArguments() != null && getArguments()!!.containsKey(ARG_LAYOUT_RES_ID)) layoutResId =
-            getArguments()!!.getInt(ARG_LAYOUT_RES_ID)
+        if (arguments != null && arguments!!.containsKey(ARG_LAYOUT_RES_ID)) layoutResId =
+            arguments!!.getInt(ARG_LAYOUT_RES_ID)
     }
 
     @Nullable
@@ -41,7 +41,7 @@ class SimpleSlide : Fragment(), ISlideBackgroundColorHolder {
             val sampleSlide = SimpleSlide()
             val args = Bundle()
             args.putInt(ARG_LAYOUT_RES_ID, layoutResId)
-            sampleSlide.setArguments(args)
+            sampleSlide.arguments = args
             return sampleSlide
         }
     }

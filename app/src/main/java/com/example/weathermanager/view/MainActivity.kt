@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.preference.PreferenceManager
 import com.example.weathermanager.R
 import com.example.weathermanager.fragments.ForecastFragment
@@ -27,8 +28,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     private val TAG = "MainActivity"
     lateinit var navigation: BottomNavigationView
-    var location: Location? = null
+    private var location: Location? = null
     private lateinit var prefs:SharedPreferences
+    private val HOME = "HOME"
+    private val OTHER = "OTHER"
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +48,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        loadFragment(HomeFragment())
+        loadFragment(HomeFragment(), HOME)
 
         navigation = findViewById(R.id.navigation)
         when (prefTheme) {
@@ -57,7 +60,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         navigation.setOnNavigationItemSelectedListener(this)
 
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        Log.d("BluetoothCommManager", "Providers: " + locationManager.getAllProviders());
+        Log.d("BluetoothCommManager", "Providers: " + locationManager.allProviders)
         Log.d("BluetoothCommManager", "isProviderEnabled (Network): " + locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER));
         Log.d("BluetoothCommManager", "isProviderEnabled (GPS): " + locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER));
         Log.d("BluetoothCommManager", "isProviderEnabled (PASSIVE_PROVIDER): " + locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER));
@@ -97,29 +100,52 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-    private fun loadFragment(fragment: Fragment): Boolean {
-        supportFragmentManager.beginTransaction()
-            .replace(fragment_container.id, fragment)
-            .addToBackStack(null)
-            .commit()
+    private fun loadFragment(fragment: Fragment, name:String): Boolean {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(fragment_container.id, fragment)
+
+        val count = fragmentManager.backStackEntryCount
+        if(name == OTHER){
+            fragmentTransaction.addToBackStack(name)
+        }
+
+        fragmentTransaction.commit()
         Log.e(TAG, "loadFragment -> $fragment")
+
+        fragmentManager.addOnBackStackChangedListener{object: FragmentManager.OnBackStackChangedListener{
+            override fun onBackStackChanged() {
+                if(fragmentManager.backStackEntryCount <= count){
+                    fragmentManager.popBackStack(OTHER, 1)
+                    fragmentManager.removeOnBackStackChangedListener(this)
+                    navigation.menu.getItem(0).isChecked = true
+                }
+            }
+        }}
         return true
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         lateinit var fragment: Fragment
+        lateinit var name: String
         when (item.itemId) {
             R.id.navigation_home -> {
                 getLocation()
                 fragment = HomeFragment()
+                name = HOME
             }
-            R.id.navigation_notification -> fragment = NotificationFragment()
-            R.id.navigation_forecast -> fragment = ForecastFragment()
+            R.id.navigation_notification -> {
+                fragment = NotificationFragment()
+                name = OTHER
+            }
+            R.id.navigation_forecast -> {
+                fragment = ForecastFragment()
+                name = OTHER
+            }
         }
-
         Log.d(TAG, "OnNavigationItemSelected -> $fragment")
 
-        return loadFragment(fragment)
+        return loadFragment(fragment, name)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -130,18 +156,18 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         Log.d(TAG, "OnOptionsItemSelected")
 
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.about -> {
                 val intent = Intent(this, AboutActivity::class.java)
                 startActivity(intent)
-                return true
+                true
             }
             R.id.settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
-                return true
+                true
             }
-            else -> return super.onOptionsItemSelected(item)
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -154,16 +180,16 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         //Toast.makeText(this, "${prefs.getFloat("lng", 0f)}", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onBackPressed() {
-        val count = getSupportFragmentManager().getBackStackEntryCount()
+    /*override fun onBackPressed() {
+        val count = supportFragmentManager.backStackEntryCount
         super.onBackPressed()
 
         if(count == 1) {
             finish()
         }
-    }
+    }*/
 
-    fun getLocation(){
+    private fun getLocation(){
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
@@ -187,15 +213,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-    private class MyLocationListener(context: MainActivity) : LocationListener {
-        val context = context
+    private class MyLocationListener(val context: MainActivity) : LocationListener {
         override fun onLocationChanged(loc: Location) {
             val TAG = "MyLocationListener"
            // Toast.makeText(context, "work", Toast.LENGTH_SHORT).show()
-            Log.w(TAG, "Location changed: Lat: ${loc.getLatitude().toString()} Lng: ${loc.getLongitude()}")
-            val longitude = "Longitude: " + loc.getLongitude()
+            Log.w(TAG, "Location changed: Lat: ${loc.latitude} Lng: ${loc.longitude}")
+            val longitude = "Longitude: " + loc.longitude
             Log.w(TAG, longitude)
-            val latitude = "Latitude: " + loc.getLatitude()
+            val latitude = "Latitude: " + loc.latitude
             Log.w(TAG, latitude)
             /*------- To get city name from coordinates -------- */
             context.setLoc(loc)

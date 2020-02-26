@@ -16,7 +16,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.example.weathermanager.R
 import com.example.weathermanager.model.WeatherAPI
 import com.example.weathermanager.model.WeatherDay
-import com.example.weathermanager.presenter.ForecastPresenter
+import com.example.weathermanager.presenter.Presenter
 
 class MyWidget : AppWidgetProvider() {
     val TAG = "MyWidget"
@@ -45,7 +45,7 @@ class MyWidget : AppWidgetProvider() {
 
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         super.onDeleted(context, appWidgetIds)
-        Log.d(TAG, "onDeleted " + Arrays.toString(appWidgetIds))
+        Log.d(TAG, "onDeleted " + appWidgetIds.contentToString())
     }
 
     override fun onDisabled(context: Context?) {
@@ -69,7 +69,7 @@ class MyWidget : AppWidgetProvider() {
                 val data = response.body()
                 var bitmap:Bitmap
 
-                if (response.isSuccessful()) {
+                if (response.isSuccessful) {
                     val remoteViews = RemoteViews(context.packageName,
                         R.layout.widget
                     )
@@ -78,7 +78,7 @@ class MyWidget : AppWidgetProvider() {
                         data!!.city + " " + data.tempWithDegree
                     )
 
-                    ForecastPresenter.notification(data.tempInt, context)
+                    Presenter.notification(data.tempWithDegree, context)
 
                     Glide.with(context)
                         .asBitmap()

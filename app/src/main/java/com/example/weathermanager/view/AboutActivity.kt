@@ -14,8 +14,7 @@ class AboutActivity : AppCompatActivity(){
         Log.d(TAG, "OnCreate")
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val prefTheme = prefs.getString("theme", "Grey")
-        when(prefTheme){
+        when(prefs.getString("theme", "Grey")){
             "Green" -> setTheme(R.style.GreenTheme)
             "Red" -> setTheme(R.style.RedTheme)
             "Blue" -> setTheme(R.style.BlueTheme)

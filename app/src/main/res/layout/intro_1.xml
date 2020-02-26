@@ -33,7 +33,8 @@
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:src="@drawable/rgb" />
+            android:src="@drawable/rgb"
+            android:contentDescription="openweathermap" />
     </LinearLayout>
 
     <TextView

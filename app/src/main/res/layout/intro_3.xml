@@ -32,7 +32,8 @@
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:src="@drawable/intro3"/>
+            android:src="@drawable/intro3"
+            android:contentDescription="notification" />
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"

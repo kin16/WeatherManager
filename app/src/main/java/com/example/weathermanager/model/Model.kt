@@ -8,21 +8,18 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Model{
-    private var lat = 49.22
-    private var lng = 28.409
+class Model(context: Context){
+    val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+    private var lat = prefs.getFloat("lat", 0.0F).toDouble()
+    private var lng = prefs.getFloat("lng", 0.0F).toDouble()
     private val units = "metric"
     private val key = WeatherAPI.KEY
     private val TAG = "Model"
     private var api = WeatherAPI.client!!.create(WeatherAPI.ApiInterface::class.java)
 
-    fun getWeather(context: Context): Single<WeatherDay> {
+    fun getWeather(): Single<WeatherDay> {
         Log.d(TAG, "Getting weather")
         return Single.create{ subscriber ->
-            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-            lat = prefs.getFloat("lat", lat.toFloat()).toDouble()
-            lng = prefs.getFloat("lng", lng.toFloat()).toDouble()
-
             Log.d(TAG, "OK")
             val callToday = api.getToday(lat, lng, units, key)
             callToday.enqueue(object : Callback<WeatherDay> {
@@ -44,13 +41,9 @@ class Model{
         }
     }
 
-    fun getForecast(context: Context): Single<WeatherForecast>{
+    fun getForecast(): Single<WeatherForecast>{
         return Single.create{
             subscriber ->
-            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-            lat = prefs.getFloat("lat", lat.toFloat()).toDouble()
-            lng = prefs.getFloat("lng", lng.toFloat()).toDouble()
-
             val callForecast = api.getForecast(lat, lng, units, key)
             callForecast.enqueue(object : Callback<WeatherForecast> {
                 override fun onResponse(call: Call<WeatherForecast>, response: Response<WeatherForecast>) {

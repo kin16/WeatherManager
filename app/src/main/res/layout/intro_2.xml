@@ -32,7 +32,8 @@
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:src="@drawable/intro2" />
+            android:src="@drawable/intro2"
+            android:contentDescription="energy" />
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
