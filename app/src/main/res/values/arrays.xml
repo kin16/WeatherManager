@@ -6,7 +6,7 @@
         <item>12</item>
         <item>24</item>
     </string-array>
-    <string-array name="listKHours">
+    <string-array name="keyHours">
         <item>3 hours</item>
         <item>6 hours</item>
         <item>12 hours</item>
@@ -15,7 +15,22 @@
     <string-array name="listThemes">
         <item>Grey</item>
         <item>Red</item>
-        <item>Blue</item>
-        <item>Green</item>
+    </string-array>
+    <string-array name="formats">
+        <item>чт 27.02.2020 – 02:00</item>
+        <item>27.02.2020 – 02:00 AM</item>
+        <item>02:00 27/02/2020</item>
+        <item>Your format</item>
+    </string-array>
+    <string-array name="keyFormats">
+        <item>EE dd.mm.yyyy - HH:mm</item>
+        <item>dd.mm.yyyy - HH:mm K</item>
+        <item>HH:mm dd/mm/yyyy</item>
+        <item>Your</item>
+    </string-array>
+    <string-array name="dark">
+        <item>dark</item>
+        <item>light</item>
+        <item>auto</item>
     </string-array>
 </resources>

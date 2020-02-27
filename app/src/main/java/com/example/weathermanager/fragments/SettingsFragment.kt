@@ -8,9 +8,13 @@ import com.example.weathermanager.R
 
 class SettingsFragment : PreferenceFragmentCompat() {
     private val TAG = "SettingsFragment"
-    private var prefDark:Boolean? = null
+    private var prefDark:String? = null
     private var prefTheme:String? = null
     private var prefPeriod:String? = null
+    private var prefKey:String? = null
+    private var prefHours:Boolean? = null
+    private var prefFormat:String? = null
+    private var prefYourFormat:String? = null
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences)
@@ -19,9 +23,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun getPrefs(){
         val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
-        prefDark = prefs.getBoolean("prefCheck", false)
+        prefDark = prefs.getString("prefDark", "auto")
         prefTheme = prefs.getString("theme", "grey")
         prefPeriod = prefs.getString("list", "12")
+        prefKey = prefs.getString("key", null)
+        prefHours = prefs.getBoolean("hours", true)
+        prefFormat = prefs.getString("format", "HH:mm dd/mm/yyyy")
+        prefYourFormat = prefs.getString("yourFormat", "HH:mm dd/mm/yyyy")
         Log.d(TAG, "Getting preferences")
     }
 

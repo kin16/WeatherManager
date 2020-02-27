@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import com.example.weathermanager.R
 
@@ -14,10 +15,17 @@ class AboutActivity : AppCompatActivity(){
         Log.d(TAG, "OnCreate")
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+        val prefDark = prefs.getString("prefDark", "auto")
+        when (prefDark){
+            "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            "auto" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
+        }
+
         when(prefs.getString("theme", "Grey")){
             "Green" -> setTheme(R.style.GreenTheme)
             "Red" -> setTheme(R.style.RedTheme)
-            "Blue" -> setTheme(R.style.BlueTheme)
             "Grey" -> setTheme(R.style.GreyTheme)
         }
 

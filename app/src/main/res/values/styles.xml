@@ -1,28 +1,21 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="GreenTheme" parent="Theme.AppCompat.Light">
+    <style name="GreenTheme" parent="Theme.AppCompat.DayNight">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/greenPrimary</item>
         <item name="colorPrimaryDark">@color/greenPrimaryDark</item>
         <item name="colorAccent">@color/greenAccent</item>
     </style>
 
-    <style name="RedTheme" parent="Theme.AppCompat.Light">
+    <style name="RedTheme" parent="Theme.AppCompat.DayNight">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/redPrimary</item>
         <item name="colorPrimaryDark">@color/redPrimaryDark</item>
         <item name="colorAccent">@color/redAccent</item>
     </style>
 
-    <style name="BlueTheme" parent="Theme.AppCompat.Light">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/bluePrimary</item>
-        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
-        <item name="colorAccent">@color/blueAccent</item>
-    </style>
-
-    <style name="GreyTheme" parent="Theme.AppCompat.Light">
+    <style name="GreyTheme" parent="Theme.AppCompat.DayNight">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/greyPrimary</item>
         <item name="colorPrimaryDark">@color/greyPrimaryDark</item>

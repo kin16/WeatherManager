@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.example.weathermanager.R
@@ -161,11 +162,19 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
         Log.d(TAG, "Time set: HOUR $hourOfDay, MINUTE $minute")
         alarmManager = activity!!.getSystemService(ALARM_SERVICE) as AlarmManager?
 
+        var interval = 12
+        val period = pref.getString("list", "12")
+        when (period){
+            "3" -> interval = 3
+            "6" -> interval = 6
+            "24" -> interval = 24
+        }
+
         if (box!!.isChecked) {
             alarmManager!!.setRepeating(
                 AlarmManager.RTC_WAKEUP,
-                cal.timeInMillis, 1000 * 60 * 60 * 24, pendingIntent)
-            Log.d(TAG, "Repeating, ${1000 * 60 * 60 * 24}ms")
+                cal.timeInMillis, (1000 * 60 * 60 * interval).toLong(), pendingIntent)
+            Log.d(TAG, "Repeating, ${1000 * 60 * 60 * interval}ms")
         }else{
             alarmManager!!.set(AlarmManager.RTC_WAKEUP, cal.timeInMillis, pendingIntent)
             Log.d(TAG, "No repeat")

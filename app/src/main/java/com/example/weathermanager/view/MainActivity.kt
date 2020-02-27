@@ -7,12 +7,14 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.*
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -39,23 +41,41 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
+        val prefDark = prefs.getString("prefDark", "auto")
+        when (prefDark){
+            "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            "auto" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
+        }
+
         val prefTheme = prefs.getString("theme", "Grey")
         when (prefTheme) {
             "Green" -> setTheme(R.style.GreenTheme)
             "Red" -> setTheme(R.style.RedTheme)
-            "Blue" -> setTheme(R.style.BlueTheme)
             "Grey" -> setTheme(R.style.GreyTheme)
         }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         loadFragment(HomeFragment(), HOME)
 
         navigation = findViewById(R.id.navigation)
-        when (prefTheme) {
-            "Green" -> navigation.background = getDrawable(R.color.greenPrimary)
-            "Red" -> navigation.background = getDrawable(R.color.redPrimary)
-            "Blue" -> navigation.background = getDrawable(R.color.bluePrimary)
-            "Grey" -> navigation.background = getDrawable(R.color.greyPrimary)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            when (prefTheme) {
+                "Green" -> {
+                    navigation.itemTextColor = getColorStateList(R.color.greenPrimary)
+                    navigation.itemIconTintList = getColorStateList(R.color.greenPrimary)
+                }
+                "Red" -> {
+                    navigation.itemTextColor = getColorStateList(R.color.redPrimary)
+                    navigation.itemIconTintList = getColorStateList(R.color.redPrimary)
+                }
+                "Grey" -> {
+                    navigation.itemTextColor = getColorStateList(R.color.greyAccent)
+                    navigation.itemIconTintList = getColorStateList(R.color.greyAccent)
+                }
+            }
         }
         navigation.setOnNavigationItemSelectedListener(this)
 

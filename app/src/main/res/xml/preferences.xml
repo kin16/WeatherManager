@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="Notifications">
-        <ListPreference
-            android:title="Update Period"
-            android:summary="This is period of update notifications"
-            android:key="list"
-            android:defaultValue="12"
-            android:entries="@array/listKHours"
-            android:entryValues="@array/listHours" />
-    </PreferenceCategory>
     <PreferenceCategory android:title="Design">
         <ListPreference
             android:title="Color Theme"
@@ -17,9 +8,43 @@
             android:defaultValue="Grey"
             android:entries="@array/listThemes"
             android:entryValues="@array/listThemes"/>
-        <CheckBoxPreference android:title="Dark Mode"
+        <ListPreference android:title="Dark Mode"
             android:summary="This is on dark theme in application"
-            android:defaultValue="false"
-            android:key="prefCheck"/>
+            android:defaultValue="MODE_NIGHT_AUTO_BATTERY"
+            android:key="prefDark"
+            android:entries="@array/dark"
+            android:entryValues="@array/dark"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Notifications">
+        <ListPreference
+            android:title="Update Period"
+            android:summary="This is period of update notifications"
+            android:key="list"
+            android:defaultValue="12"
+            android:entries="@array/keyHours"
+            android:entryValues="@array/listHours" />
+        <EditTextPreference android:title="API key"
+            android:summary="Key for API OpenWeatherMap"
+            android:key="key">
+        </EditTextPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Units">
+        <CheckBoxPreference android:title="24-hours format"
+            android:summary="13:00"
+            android:key="hours"
+            android:defaultValue="true"/>
+        <ListPreference
+            android:title="Format date"
+            android:summary="Change format of data"
+            android:key="format"
+            android:entries="@array/formats"
+            android:entryValues="@array/keyFormats">
+        </ListPreference>
+        <EditTextPreference android:title="Your format date"
+            android:summary="Set your pattern for SimpleDataFormat in forecast \nExample: E, d MMM H:mm"
+            android:defaultValue="HH:mm dd/mm/yyyy"
+            android:key="yourFormat"
+            android:dialogTitle="Set your format: ">
+        </EditTextPreference>
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>
