@@ -3,21 +3,22 @@
     <!-- Base application theme. -->
     <style name="NewTheme" parent="Theme.AppCompat.DayNight">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/newPrimary</item>
+        <item name="colorPrimary">@color/darkPrimary</item>
         <item name="colorPrimaryDark">@color/darkPrimaryDark</item>
         <item name="colorAccent">@color/newAccent</item>
     </style>
+
     <style name="RedTheme" parent="Theme.AppCompat.DayNight">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/redPrimary</item>
-        <item name="colorPrimaryDark">@color/redPrimaryDark</item>
-        <item name="colorAccent">@color/redAccent</item>
+        <item name="colorAccent">@color/redPrimary</item>
+        <item name="colorPrimary">@color/darkPrimary</item>
+        <item name="colorPrimaryDark">@color/darkPrimaryDark</item>
     </style>
 
     <style name="ClassicTheme" parent="Theme.AppCompat.DayNight">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/classicPrimary</item>
-        <item name="colorPrimaryDark">@color/classicPrimaryDark</item>
+        <item name="colorPrimary">@color/darkPrimary</item>
+        <item name="colorPrimaryDark">@color/darkPrimaryDark</item>
         <item name="colorAccent">@color/classicAccent</item>
     </style>
 
@@ -31,6 +32,7 @@
         <item name="colorAccent">@color/classicAccent</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+
 
     <style name="MyCardViewStyle" parent="android:Theme.Material.Light">
         <item name="cardCornerRadius">2dp</item>

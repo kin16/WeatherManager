@@ -53,22 +53,18 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
         mCancel = v.findViewById(R.id.button2)
         mCancel!!.setOnClickListener(this)
         val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
-        when(prefs.getString("theme", "Grey")){
-            "Green" -> {
-                mButton?.background = activity!!.getDrawable(R.color.greenPrimary)
-                mCancel?.background = activity!!.getDrawable(R.color.greenPrimary)
+        when(prefs.getString("theme", "Classic")){
+            "Classic" -> {
+                mButton?.background = activity!!.getDrawable(R.color.classicAccent)
+                mCancel?.background = activity!!.getDrawable(R.color.classicAccent)
             }
             "Red" -> {
-                mButton?.background = activity!!.getDrawable(R.color.redPrimary)
-                mCancel?.background = activity!!.getDrawable(R.color.redPrimary)
+                mButton?.background = activity!!.getDrawable(R.color.redAccent)
+                mCancel?.background = activity!!.getDrawable(R.color.redAccent)
             }
-            "Blue" -> {
-                mButton?.background = activity!!.getDrawable(R.color.bluePrimary)
-                mCancel?.background = activity!!.getDrawable(R.color.bluePrimary)
-            }
-            "Grey" -> {
-                mButton?.background = activity!!.getDrawable(R.color.greyAccent)
-                mCancel?.background = activity!!.getDrawable(R.color.greyAccent)
+            "New" -> {
+                mButton?.background = activity!!.getDrawable(R.color.newAccent)
+                mCancel?.background = activity!!.getDrawable(R.color.newAccent)
             }
         }
         box = v.findViewById(R.id.box)

@@ -48,11 +48,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             "auto" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
         }
 
-        val prefTheme = prefs.getString("theme", "Grey")
+        val prefTheme = prefs.getString("theme", "Classic")
         when (prefTheme) {
-            "Green" -> setTheme(R.style.GreenTheme)
+            "New" -> setTheme(R.style.NewTheme)
             "Red" -> setTheme(R.style.RedTheme)
-            "Grey" -> setTheme(R.style.GreyTheme)
+            "Classic" -> setTheme(R.style.ClassicTheme)
         }
 
         super.onCreate(savedInstanceState)
@@ -63,17 +63,17 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             when (prefTheme) {
-                "Green" -> {
-                    navigation.itemTextColor = getColorStateList(R.color.greenPrimary)
-                    navigation.itemIconTintList = getColorStateList(R.color.greenPrimary)
+                "New" -> {
+                    navigation.itemTextColor = getColorStateList(R.color.newAccent)
+                    navigation.itemIconTintList = getColorStateList(R.color.newAccent)
                 }
                 "Red" -> {
-                    navigation.itemTextColor = getColorStateList(R.color.redPrimary)
-                    navigation.itemIconTintList = getColorStateList(R.color.redPrimary)
+                    navigation.itemTextColor = getColorStateList(R.color.redAccent)
+                    navigation.itemIconTintList = getColorStateList(R.color.redAccent)
                 }
-                "Grey" -> {
-                    navigation.itemTextColor = getColorStateList(R.color.greyAccent)
-                    navigation.itemIconTintList = getColorStateList(R.color.greyAccent)
+                "Classic" -> {
+                    navigation.itemTextColor = getColorStateList(R.color.classicAccent)
+                    navigation.itemIconTintList = getColorStateList(R.color.classicAccent)
                 }
             }
         }
@@ -180,11 +180,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.about -> {
                 val intent = Intent(this, AboutActivity::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
             R.id.settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)

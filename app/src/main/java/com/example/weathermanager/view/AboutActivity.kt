@@ -23,10 +23,10 @@ class AboutActivity : AppCompatActivity(){
             "auto" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
         }
 
-        when(prefs.getString("theme", "Grey")){
-            "Green" -> setTheme(R.style.GreenTheme)
+        when(prefs.getString("theme", "Classic")){
+            "New" -> setTheme(R.style.NewTheme)
             "Red" -> setTheme(R.style.RedTheme)
-            "Grey" -> setTheme(R.style.GreyTheme)
+            "Classic" -> setTheme(R.style.ClassicTheme)
         }
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -39,8 +39,8 @@ class AboutActivity : AppCompatActivity(){
         Log.d(TAG, "OnOptionsItemSelected")
 
         val intent = Intent(this, MainActivity::class.java)
-        finish()
         startActivity(intent)
+        finish()
 
         return true
     }
@@ -49,7 +49,7 @@ class AboutActivity : AppCompatActivity(){
         Log.d(TAG, "OnBackPressed")
 
         val intent = Intent(this, MainActivity::class.java)
-        finish()
         startActivity(intent)
+        finish()
     }
 }

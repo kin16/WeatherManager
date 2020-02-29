@@ -26,10 +26,10 @@ class SettingsActivity : AppCompatActivity(){
         }
 
 
-        when(prefs.getString("theme", "Grey")){
-            "Green" -> setTheme(R.style.GreenTheme)
+        when(prefs.getString("theme", "Classic")){
+            "New" -> setTheme(R.style.NewTheme)
             "Red" -> setTheme(R.style.RedTheme)
-            "Grey" -> setTheme(R.style.GreyTheme)
+            "Classic" -> setTheme(R.style.ClassicTheme)
         }
 
         super.onCreate(savedInstanceState)
@@ -45,8 +45,8 @@ class SettingsActivity : AppCompatActivity(){
         Log.d(TAG, "OnOptionsItemSelected")
 
         val intent = Intent(this, MainActivity::class.java)
-        finish()
         startActivity(intent)
+        finish()
 
         return true
     }
@@ -55,7 +55,7 @@ class SettingsActivity : AppCompatActivity(){
         Log.d(TAG, "OnBackPressed")
 
         val intent = Intent(this, MainActivity::class.java)
-        finish()
         startActivity(intent)
+        finish()
     }
 }

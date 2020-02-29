@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.example.weathermanager.R
+import androidx.preference.Preference as Preference
 
 class SettingsFragment : PreferenceFragmentCompat() {
     private val TAG = "SettingsFragment"
@@ -18,13 +19,28 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences)
+
+        val preference = findPreference("theme")
+        preference.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _, _ ->
+                activity!!.recreate()
+                true
+            }
+
+        val preference2 = findPreference("prefDark")
+        preference2.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _, _ ->
+                activity!!.recreate()
+                true
+            }
+
         Log.d(TAG, "onCreatePreferences")
     }
 
     private fun getPrefs(){
         val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
         prefDark = prefs.getString("prefDark", "auto")
-        prefTheme = prefs.getString("theme", "grey")
+        prefTheme = prefs.getString("theme", "Classic")
         prefPeriod = prefs.getString("list", "12")
         prefKey = prefs.getString("key", null)
         prefHours = prefs.getBoolean("hours", true)
