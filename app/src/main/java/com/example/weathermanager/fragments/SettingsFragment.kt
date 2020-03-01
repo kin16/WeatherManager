@@ -34,6 +34,18 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 true
             }
 
+        val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
+        val format = prefs.getString("format", "HH:mm dd/mm/yyyy")!!
+        if (format != "your"){
+            preferenceScreen.findPreference("yourFormat").isEnabled = false
+        }
+        val preference3 = findPreference("format")
+        preference3.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _, value ->
+                preferenceScreen.findPreference("yourFormat").isEnabled = value == "your"
+                true
+            }
+
         Log.d(TAG, "onCreatePreferences")
     }
 

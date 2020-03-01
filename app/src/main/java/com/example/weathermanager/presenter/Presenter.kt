@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.os.Build
+import android.provider.Settings.Secure.getString
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -66,15 +67,15 @@ class Presenter(private val model: Model){
 
         v.cardtemp.text = weatherDay.tempWithDegree
         v.carddescription.text = weatherDay.description
-        v.pressure.text = "Давление   -   " + weatherDay.pressure
-        v.humidity.text = "Влажность  -  " + weatherDay.humidity
-        v.windspeed.text = "Скорость ветра  -  " + weatherDay.speed
-        v.winddeg.text = "Направление ветра  -  " + weatherDay.deg
-        v.clouding.text = "Облачность  -  " + weatherDay.all
+        v.pressure.text = v.pressure.text.toString() + "   -   " + weatherDay.pressure
+        v.humidity.text = v.humidity.text.toString() + "   -   " + weatherDay.humidity
+        v.windspeed.text = v.windspeed.text.toString() + "   -   " + weatherDay.speed
+        v.winddeg.text = v.winddeg.text.toString() + "   -   " + weatherDay.deg
+        v.clouding.text = v.clouding.text.toString() + "   -   " + weatherDay.all
 
         val dateFormat = SimpleDateFormat("HH:mm")
         dateFormat.timeZone = weatherDay.date.timeZone
-        v.textView.text = "Дата обновления: " + dateFormat.format(weatherDay.date.time)
+        v.textView.text = v.textView.text.toString() + dateFormat.format(weatherDay.date.time)
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -150,7 +151,7 @@ class Presenter(private val model: Model){
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     Log.d("TimeReceiver", "Getting weather")
-                    temp = it.tempWithDegree
+                    temp = it.tempInt.toString()
                 },{
                     Log.e("TimeReceiver", "Error")
                 })

@@ -25,7 +25,6 @@ class SettingsActivity : AppCompatActivity(){
             "auto" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
         }
 
-
         when(prefs.getString("theme", "Classic")){
             "New" -> setTheme(R.style.NewTheme)
             "Red" -> setTheme(R.style.RedTheme)

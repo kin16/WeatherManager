@@ -146,8 +146,14 @@ class NotificationFragment : Fragment(),View.OnClickListener, TimePickerDialog.O
         }
         Log.d(TAG, "${cal.time}, ${currentTime.time}")
 
+        val bool = pref.getBoolean("hours", true)
+
         val text = clock
-        text.text = cal.get(Calendar.HOUR_OF_DAY).toString() + ":" + cal.get(Calendar.MINUTE).toString()
+        if (bool){
+            text.text = SimpleDateFormat("HH:mm").format(cal.time)
+        }else{
+            text.text = SimpleDateFormat("hh:mm").format(cal.time)
+        }
 
         date?.text = SimpleDateFormat("dd, MMM").format(cal.time)
         set?.text = "Уведомление установлено:"

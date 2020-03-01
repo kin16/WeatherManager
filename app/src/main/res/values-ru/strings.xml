@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">WeatherManager</string>
+    <string name="weather">Weather</string>
+    <string name="title_activity_main">WeatherManager</string>
+
+    <string name="title_home">Сегодня</string>
+    <string name="title_forecast">Прогноз</string>
+    <string name="title_notification">Уведомления</string>
+
+    <string name="pressure">Атмосферное давление, гПа</string>
+    <string name="windspeed">Скорость ветра, м/с</string>
+    <string name="humidity">Влажность, %</string>
+    <string name="winddeg">Направление ветра, °</string>
+    <string name="clouding">Облачность, %</string>
+
+    <string name="set">Уведомление установлено:</string>
+    <string name="clock">00:00</string>
+    <string name="date">Дата</string>
+    <string name="repeat">Повторять</string>
+    <string name="settime">Установить</string>
+    <string name="cancel">Отмена</string>
+
+    <string name="city">Город</string>
+    <string name="update_time">Дата обновления: </string>
+
+    <string name="settings">Настройки</string>
+    <string name="about">О программе</string>
+</resources>

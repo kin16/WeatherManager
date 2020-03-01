@@ -2,7 +2,7 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="Design">
         <ListPreference
-            android:title="Color Theme"
+            android:title="Color theme"
             android:summary="This theme of color in application"
             android:key="theme"
             android:defaultValue="Classic"
@@ -35,7 +35,7 @@
             android:defaultValue="true"/>
         <ListPreference
             android:title="Format date"
-            android:summary="Change format of data"
+            android:summary="Change format of data in forecast"
             android:key="format"
             android:entries="@array/formats"
             android:entryValues="@array/keyFormats">

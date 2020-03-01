@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weathermanager.R
@@ -27,6 +28,7 @@ class ForecastFragment : Fragment() {
     private lateinit var presenter: Presenter
     lateinit var progressDialog: MyProgressDialog
     private var disposable = AndroidDisposable()
+    private var formatDate = "HH:mm dd/mm/yyyy"
 
     @Nullable
     @Override
@@ -48,6 +50,12 @@ class ForecastFragment : Fragment() {
         rec.layoutManager = manager
         rec.setHasFixedSize(true)
         presenter.forecast(this, disposable)
+
+        val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
+        formatDate = prefs.getString("format", "HH:mm dd/mm/yyyy")!!
+        if (formatDate == "your"){
+            formatDate = prefs.getString("yourFormat", "HH:mm dd/mm/yyyy")!!
+        }
 
         return view
     }
@@ -71,7 +79,7 @@ class ForecastFragment : Fragment() {
 
            val person = items[position]
 
-           val dateFormat = SimpleDateFormat("EEEEE dd.MM.yy - HH:mm")
+           val dateFormat = SimpleDateFormat(fragment.formatDate)
            dateFormat.timeZone = (person.date.timeZone)
            holder.date.text = dateFormat.format(person.date.time)
 

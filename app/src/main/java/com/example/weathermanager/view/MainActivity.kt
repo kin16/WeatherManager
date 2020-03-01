@@ -202,15 +202,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         //Toast.makeText(this, "${prefs.getFloat("lng", 0f)}", Toast.LENGTH_SHORT).show()
     }
 
-    /*override fun onBackPressed() {
-        val count = supportFragmentManager.backStackEntryCount
-        super.onBackPressed()
-
-        if(count == 1) {
-            finish()
-        }
-    }*/
-
     private fun getLocation(){
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)

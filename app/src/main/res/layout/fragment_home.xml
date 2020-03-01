@@ -9,9 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
-        android:text="City"
+        android:text="@string/city"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="18sp" />
 
     <View
         android:layout_width="match_parent"
@@ -28,20 +28,19 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/cloudy_sun"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginStart="10dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp">
+            android:layout_marginStart="40dp">
             <TextView
                 android:id="@+id/cardtemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
                 android:textSize="70sp" />
@@ -52,9 +51,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/cardtemp"
                 android:layout_alignEnd="@+id/cardtemp"
-                android:layout_alignRight="@+id/cardtemp"
                 android:layout_marginTop="8dp"
-                android:textSize="18dp" />
+                android:textSize="20sp" />
 
         </RelativeLayout>
     </LinearLayout>
@@ -70,61 +68,54 @@
         android:id="@+id/pressure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="22dp"
+        android:text="@string/pressure"
         android:layout_marginBottom="0dp"
-        android:textSize="18dp" />
+        android:textSize="20sp" />
     <TextView
         android:layout_marginTop="5dp"
         android:id="@+id/humidity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="22dp"
+        android:text="@string/humidity"
         android:layout_marginBottom="0dp"
-        android:textSize="18dp" />
+        android:textSize="20sp" />
     <TextView
         android:layout_marginTop="5dp"
         android:id="@+id/windspeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="22dp"
+        android:text="@string/windspeed"
         android:layout_marginBottom="0dp"
-        android:textSize="18dp" />
+        android:textSize="20sp" />
     <TextView
         android:layout_marginTop="5dp"
         android:id="@+id/winddeg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="22dp"
+        android:text="@string/winddeg"
         android:layout_marginBottom="0dp"
-        android:textSize="18dp" />
+        android:textSize="20sp" />
     <TextView
         android:layout_marginTop="5dp"
         android:id="@+id/clouding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="22dp"
+        android:text="@string/clouding"
         android:layout_marginBottom="0dp"
-        android:textSize="18dp" />
+        android:textSize="20sp" />
     <TextView
         android:layout_marginTop="5dp"
         android:id="@+id/textView"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="22dp"
         android:layout_marginBottom="0dp"
-        android:text="Дата обновления: "
+        android:text="@string/update_time"
         android:textAlignment="center"
-        android:textSize="18dp" />
+        android:textSize="20sp" />
 </LinearLayout>
